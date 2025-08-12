@@ -30,3 +30,23 @@ This project implements a **Retrieval-Augmented Generation (RAG)** pipeline, ena
 ### Architecture Diagram
 
 ![RAG pipeline diagram](docs/diagram.png)
+
+## Quick Start
+
+### Requirements
+
+- Python 3.10+
+- Ollama running locally (`ollama serve`)
+- Models:
+  - `nomic-embed-text:latest` (embeddings)
+  - `qwen3:8b` (LLM) — or any pulled chat model
+
+### Setup
+
+```bash
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+ollama pull nomic-embed-text:latest
+ollama pull qwen3:8b
+```
