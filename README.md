@@ -41,11 +41,21 @@ This project implements a **Retrieval-Augmented Generation (RAG)** pipeline, ena
   - `nomic-embed-text:latest` (embeddings)
   - `qwen3:8b` (LLM) — or any pulled chat model
 
-### Setup
+### Setup MacOS/Linux
 
 ```bash
 python -m venv venv
 source venv/bin/activate
+pip install -r requirements.txt
+ollama pull nomic-embed-text:latest
+ollama pull qwen3:8b
+```
+
+### Setup Windows
+
+```powershell
+python -m venv venv
+.\venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 ollama pull nomic-embed-text:latest
 ollama pull qwen3:8b
