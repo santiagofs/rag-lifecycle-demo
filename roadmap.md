@@ -1,4 +1,4 @@
-# Microplan — 12 Weeks (RAG Repo, Python core, Node eval)
+# 12 Weeks RAG App
 
 - Week 1 – Ingestion Basics
 

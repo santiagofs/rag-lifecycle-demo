@@ -60,3 +60,7 @@ pip install -r requirements.txt
 ollama pull nomic-embed-text:latest
 ollama pull qwen3:8b
 ```
+
+### Run
+
+`node eval/run.mjs`
