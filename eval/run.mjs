@@ -8,16 +8,32 @@ const csvPath = process.argv[2] || "eval/tests/golden.csv"
 const resultsPath = "eval/results.json"
 
 function parseCSV(text) {
-  const [header, ...rows] = text.trim().split(/\r?\n/)
-  const cols = header.split(",")
-  return rows.map((r) => {
-    // naive CSV split (fine for our simple rows)
-    const parts = r.split(",")
-    const obj = {}
-    cols.forEach((c, i) => (obj[c.trim()] = (parts[i] ?? "").trim()))
-    return obj
+  // Normalize CRLF, drop empty lines
+  const lines = text.replace(/\r/g, "").split("\n").filter(l => l.trim().length)
+  if (lines.length === 0) return []
+  const header = splitCSVLine(lines[0])
+  return lines.slice(1).map(line => {
+    const cells = splitCSVLine(line)
+    const row = {}
+    header.forEach((h, i) => (row[h.trim()] = (cells[i] ?? "").trim()))
+    return row
   })
 }
+
+function splitCSVLine(line) {
+  return line
+    // split on commas that are NOT inside quotes
+    .split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/)
+    .map(cell => {
+      let s = cell.trim();
+      // if quoted, strip outer quotes and unescape ""
+      if (s.startsWith('"') && s.endsWith('"')) {
+        s = s.slice(1, -1).replace(/""/g, '"');
+      }
+      return s;
+    });
+}
+
 
 async function generateOllama({ question, context }) {
   const prompt = `Use ONLY the <context> to answer.
@@ -37,8 +53,33 @@ Answer:`
   return (data.response || "").trim()
 }
 
-function contains(haystack, needle) {
-  return haystack.toLowerCase().includes(needle.toLowerCase())
+// ---- Normalization & checks ----
+function normalizeAggressive(s) {
+  return (s || "")
+    .normalize("NFKC")           // Unicode compatibility fold
+    .replace(/[“”„‟]/g, '"')     // smart double quotes -> "
+    .replace(/[‘’‚‛]/g, "'")     // smart single quotes -> '
+    .replace(/[–—]/g, "-")       // en/em dashes -> hyphen
+    .replace(/[^\S\r\n]+/g, " ") // collapse all spaces
+    .replace(/[.,;:!?]+$/g, "")  // strip trailing punctuation
+    .toLowerCase()
+    .trim()
+}
+
+function checkContains(out, reference) {
+  return normalizeAggressive(out).includes(normalizeAggressive(reference))
+}
+
+function checkDontKnow(out) {
+  return normalizeAggressive(out) === normalizeAggressive("I don't know")
+}
+
+function checkRegex(out, pattern) {
+  // Strip user anchors if present, then anchor ourselves and allow one trailing punctuation.
+  const core = pattern.replace(/^\^/, "").replace(/\$$/, "");
+  const wrapped = `^(?:${core})\\s*[.,;:!?]?$`;
+  const re = new RegExp(wrapped, "i");
+  return re.test((out || "").trim());
 }
 
 async function main() {
@@ -63,14 +104,19 @@ async function main() {
   )
 
   for (const t of tests) {
-    const { id, question, context, reference } = t
+    const { id, question, context, reference, eval_type = "contains" } = t
     let out = "",
       error = null,
       ok = false
     const start = Date.now()
     try {
       out = await generateOllama({ question, context })
-      ok = contains(out, reference)
+      switch (eval_type) {
+        case "dontknow": ok = checkDontKnow(out); break
+        case "regex":    ok = checkRegex(out, reference); break
+        case "contains":
+        default:         ok = checkContains(out, reference)
+      }
     } catch (e) {
       error = String(e)
     }
@@ -95,9 +141,13 @@ async function main() {
       2
     )
   )
-  console.log(
-    `\nSummary: ${pass}/${tests.length} passed. Report: ${resultsPath}\n`
-  )
+
+  const total = tests.length
+  const accuracy = total ? (pass / total) * 100 : 0
+  const failedIds = results.filter(r => !r.ok && !r.error).map(r => r.id)
+
+  console.log(`\nSummary: ${pass}/${total} passed (${accuracy.toFixed(1)}%). Report: ${resultsPath}`)
+  console.log(`Failures: ${failedIds.length ? failedIds.join(", ") : "none"}\n`)
 }
 
 await main()
