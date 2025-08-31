@@ -1,0 +1,137 @@
+[
+  {
+    "id": 1,
+    "question": "What is the warranty period?",
+    "context": "The warranty period is 2 years.",
+    "reference": "2 years",
+    "eval_type": "contains",
+    "source": "docA:1",
+    "difficulty": 1
+  },
+  {
+    "id": 2,
+    "question": "Which materials are allowed?",
+    "context": "Approved materials are glass, wood, and plastic.",
+    "reference": "(?=.*\\bglass\\b)(?=.*\\bwood\\b)(?=.*\\bplastic\\b).+",
+    "eval_type": "regex",
+    "source": "docA:2",
+    "difficulty": 2
+  },
+  {
+    "id": 3,
+    "question": "Name one join type.",
+    "context": "Frame joins can be 45 degrees.",
+    "reference": ".*\\b(45(?:\\s*degrees|-degree)|vertical outside|horizontal outside)\\b.*",
+    "eval_type": "regex",
+    "source": "docB:3",
+    "difficulty": 2
+  },
+  {
+    "id": 4,
+    "question": "What is the return window?",
+    "context": "This document does not define any return policy.",
+    "reference": "I don't know",
+    "eval_type": "dontknow",
+    "source": "docC:4",
+    "difficulty": 1
+  },
+  {
+    "id": 5,
+    "question": "Convert the lead time to days.",
+    "context": "Lead time: 3 weeks.",
+    "reference": "21",
+    "eval_type": "contains",
+    "source": "docD:2",
+    "difficulty": 3
+  },
+  {
+    "id": 6,
+    "question": "Give the latest revision date.",
+    "context": "Revisions: v1 (2023-01-10), v2 (2024-11-03).",
+    "reference": "2024-11-03",
+    "eval_type": "contains",
+    "source": "docE:5",
+    "difficulty": 3
+  },
+  {
+    "id": 7,
+    "question": "State the model name exactly.",
+    "context": "Current model is LLAMA-3.1:8B.",
+    "reference": "^LLAMA-3\\.1:8B$",
+    "eval_type": "regex",
+    "source": "docF:1",
+    "difficulty": 2
+  },
+  {
+    "id": 8,
+    "question": "What is the support email?",
+    "context": "Contact: support@example.com for issues.",
+    "reference": "support@example.com",
+    "eval_type": "contains",
+    "source": "docG:2",
+    "difficulty": 1
+  },
+  {
+    "id": 9,
+    "question": "How many sizes are offered?",
+    "context": "Sizes: S, M, L, XL (four options).",
+    "reference": ".*\\b(4|four)\\b.*",
+    "eval_type": "regex",
+    "source": "docH:3",
+    "difficulty": 2
+  },
+  {
+    "id": 10,
+    "question": "Which items are not permitted?",
+    "context": "Permitted items: glass, wood, plastic.",
+    "reference": "I don't know",
+    "eval_type": "dontknow",
+    "source": "docA:2",
+    "difficulty": 2
+  },
+  {
+    "id": 11,
+    "question": "Name any plastic type allowed.",
+    "context": "Approved materials are glass, wood, and plastic. Plastic includes PET and ABS.",
+    "reference": "^(PET|ABS)$",
+    "eval_type": "regex",
+    "source": "docA:2",
+    "difficulty": 3
+  },
+  {
+    "id": 12,
+    "question": "When does coverage start?",
+    "context": "Coverage begins 30 days after purchase.",
+    "reference": "30 days after purchase",
+    "eval_type": "contains",
+    "source": "docI:2",
+    "difficulty": 2
+  },
+  {
+    "id": 13,
+    "question": "What voltage is required?",
+    "context": "Power requirements: 110–120 V AC only. DC adapters are not supported.",
+    "reference": "110–120 V AC",
+    "eval_type": "contains",
+    "source": "docJ:6",
+    "difficulty": 2
+  },
+  {
+    "id": 14,
+    "question": "What is the maximum operating temperature?",
+    "context": "Operating temperature range: 0°C to 45°C.",
+    "reference": "45°C",
+    "eval_type": "contains",
+    "source": "docK:1",
+    "difficulty": 2
+  },
+  {
+    "id": 15,
+    "question": "Is steel allowed?",
+    "context": "Allowed materials: glass, wood, plastic.",
+    "reference": "I don't know",
+    "eval_type": "dontknow",
+    "source": "docA:2",
+    "difficulty": 2
+  }
+]
