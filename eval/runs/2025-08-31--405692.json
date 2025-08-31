@@ -1,0 +1,123 @@
+{
+  "summary": {
+    "run_id": "2025-08-31--405692",
+    "model": "llama3.1:8b",
+    "pipeline_version": "dev",
+    "harness_version": "dev",
+    "golden_hash": "b6c71584",
+    "config_hash": "5c745428",
+    "started_at": "2025-08-31T19:55:42.383Z",
+    "finished_at": "2025-08-31T19:56:11.308Z",
+    "total": 15,
+    "passed": 13,
+    "accuracy": 0.87,
+    "avg_latency_ms": 1833
+  },
+  "items": [
+    {
+      "id": 1,
+      "pass": true,
+      "latency_ms": 2101,
+      "error": null,
+      "actual": "The warranty period is 2 years."
+    },
+    {
+      "id": 2,
+      "pass": true,
+      "latency_ms": 1969,
+      "error": null,
+      "actual": "Glass, wood, and plastic."
+    },
+    {
+      "id": 3,
+      "pass": false,
+      "latency_ms": 2565,
+      "error": null,
+      "actual": "One join type is a 45-degree frame join."
+    },
+    {
+      "id": 4,
+      "pass": true,
+      "latency_ms": 1666,
+      "error": null,
+      "actual": "I don't know."
+    },
+    {
+      "id": 5,
+      "pass": false,
+      "latency_ms": 1701,
+      "error": null,
+      "actual": "I don't know."
+    },
+    {
+      "id": 6,
+      "pass": true,
+      "latency_ms": 2873,
+      "error": null,
+      "actual": "v2 (2024-11-03)."
+    },
+    {
+      "id": 7,
+      "pass": true,
+      "latency_ms": 2585,
+      "error": null,
+      "actual": "LLAMA-3.1:8B."
+    },
+    {
+      "id": 8,
+      "pass": true,
+      "latency_ms": 1298,
+      "error": null,
+      "actual": "support@example.com"
+    },
+    {
+      "id": 9,
+      "pass": true,
+      "latency_ms": 1256,
+      "error": null,
+      "actual": "Four."
+    },
+    {
+      "id": 10,
+      "pass": true,
+      "latency_ms": 1689,
+      "error": null,
+      "actual": "I don't know."
+    },
+    {
+      "id": 11,
+      "pass": true,
+      "latency_ms": 1205,
+      "error": null,
+      "actual": "PET"
+    },
+    {
+      "id": 12,
+      "pass": true,
+      "latency_ms": 1604,
+      "error": null,
+      "actual": "30 days after purchase."
+    },
+    {
+      "id": 13,
+      "pass": true,
+      "latency_ms": 1860,
+      "error": null,
+      "actual": "110-120 V AC"
+    },
+    {
+      "id": 14,
+      "pass": true,
+      "latency_ms": 1456,
+      "error": null,
+      "actual": "45°C."
+    },
+    {
+      "id": 15,
+      "pass": true,
+      "latency_ms": 1660,
+      "error": null,
+      "actual": "I don't know."
+    }
+  ]
+}
