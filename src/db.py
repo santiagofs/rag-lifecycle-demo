@@ -2,10 +2,11 @@ import sqlite3
 import numpy as np
 from typing import List, Dict, Optional
 import json
+from config import DB_PATH
 
 class VectorStore:
-    def __init__(self, db_path: str = "vectors.db"):
-        self.db_path = db_path
+    def __init__(self, db_path: str = None):
+        self.db_path = db_path or DB_PATH
         self.init_db()
 
     def init_db(self):

@@ -4,8 +4,9 @@ from typing import List, Dict, Optional
 import uvicorn
 from src.embeddings import get_embedding
 from src.db import store
-from src.retrieve import retrieve_cosine, retrieve_hybrid, retrieve_fts, get_context_from_results
+from src.retrieve import retrieve_cosine, retrieve_hybrid, retrieve_fts, get_context_from_results, retrieve
 from src.llm import generate
+from config import TOP_K, HYBRID
 
 app = FastAPI(title="RAG API", description="Retrieval-Augmented Generation API")
 
@@ -15,8 +16,8 @@ class DocumentRequest(BaseModel):
 
 class QueryRequest(BaseModel):
     query: str
-    k: int = 3
-    method: str = "cosine"  # "cosine", "hybrid", "fts"
+    k: int = None
+    method: str = None  # "cosine", "hybrid", "fts", or None for auto
     cosine_weight: float = 0.7
     fts_weight: float = 0.3
 
@@ -44,12 +45,16 @@ async def ingest_document(doc: DocumentRequest):
 async def retrieve_documents(query: QueryRequest):
     """Retrieve documents based on query"""
     try:
-        if query.method == "cosine":
-            results = retrieve_cosine(query.query, query.k)
-        elif query.method == "hybrid":
-            results = retrieve_hybrid(query.query, query.k, query.cosine_weight, query.fts_weight)
-        elif query.method == "fts":
-            results = retrieve_fts(query.query, query.k)
+        # Use environment defaults if not specified
+        k = query.k or TOP_K
+        method = query.method or ("hybrid" if HYBRID else "cosine")
+
+        if method == "cosine":
+            results = retrieve_cosine(query.query, k)
+        elif method == "hybrid":
+            results = retrieve_hybrid(query.query, k, query.cosine_weight, query.fts_weight)
+        elif method == "fts":
+            results = retrieve_fts(query.query, k)
         else:
             raise HTTPException(status_code=400, detail="Invalid method. Use 'cosine', 'hybrid', or 'fts'")
 
@@ -67,13 +72,17 @@ async def retrieve_documents(query: QueryRequest):
 async def rag_query(query: QueryRequest):
     """Full RAG pipeline: retrieve + generate"""
     try:
+        # Use environment defaults if not specified
+        k = query.k or TOP_K
+        method = query.method or ("hybrid" if HYBRID else "cosine")
+
         # Retrieve documents
-        if query.method == "cosine":
-            results = retrieve_cosine(query.query, query.k)
-        elif query.method == "hybrid":
-            results = retrieve_hybrid(query.query, query.k, query.cosine_weight, query.fts_weight)
-        elif query.method == "fts":
-            results = retrieve_fts(query.query, query.k)
+        if method == "cosine":
+            results = retrieve_cosine(query.query, k)
+        elif method == "hybrid":
+            results = retrieve_hybrid(query.query, k, query.cosine_weight, query.fts_weight)
+        elif method == "fts":
+            results = retrieve_fts(query.query, k)
         else:
             raise HTTPException(status_code=400, detail="Invalid method. Use 'cosine', 'hybrid', or 'fts'")
 

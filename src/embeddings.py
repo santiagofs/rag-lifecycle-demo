@@ -1,12 +1,13 @@
 import requests
-import os
+from config import OLLAMA_BASE_URL, EMBEDDING_MODEL
 
-OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
-
-def get_embedding(text: str, model: str = "nomic-embed-text"):
+def get_embedding(text: str, model: str = None):
     """
     Generate a vector embedding for the given text using Ollama.
     """
+    if model is None:
+        model = EMBEDDING_MODEL
+
     try:
         response = requests.post(
             f"{OLLAMA_BASE_URL}/api/embeddings",

@@ -6,6 +6,8 @@
     "dev": "python main.py",
     "eval": "node eval/run.mjs eval/tests/golden.json",
     "eval:api": "node eval/run.mjs eval/tests/golden.json --api",
-    "compare": "node eval/compare.mjs"
+    "compare": "node eval/compare.mjs",
+    "api:start": "python api.py",
+    "cli": "python cli.py"
   }
 }
