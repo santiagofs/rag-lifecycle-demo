@@ -17,7 +17,7 @@ else:
 client = OpenAI(base_url=OLLAMA_BASE_URL, api_key=API_KEY)
 
 LLM_MODEL = os.getenv("LLM_MODEL", "llama3.1:8b")
-EMBEDDING_MODEL = os.getenv("EMBED_MODEL_NAME", "nomic-embed-text")
+EMBED_MODEL_NAME = os.getenv("EMBED_MODEL_NAME", "nomic-embed-text")
 
 # Database Configuration
 DB_PATH = os.getenv("DB_PATH", "./vectors.db")
