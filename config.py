@@ -16,5 +16,5 @@ else:
 
 client = OpenAI(base_url=BASE_URL, api_key=API_KEY)
 
-LLM_MODEL = os.getenv("LLM_MODEL")
-EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL")
+LLM_MODEL = os.getenv("LLM_MODEL", "llama3.1:8b")
+EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "nomic-embed-text")
