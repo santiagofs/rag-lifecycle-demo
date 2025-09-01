@@ -61,6 +61,26 @@ ollama pull nomic-embed-text:latest
 ollama pull qwen3:8b
 ```
 
-### Run
+### Run the app
 
-`node eval/run.mjs`
+npm run dev
+
+### Run the tests
+
+node eval/run.mjs eval/tests/golden.json
+
+### Compare two specific archived test runs
+
+node eval/compare.mjs eval/runs/<old>.json eval/runs/<new>.json --golden eval/tests/golden.json
+
+### Compare newest vs previous (no args!)
+
+node eval/compare.mjs
+
+### Compare newest vs 3rd previous
+
+node eval/compare.mjs --prev 3
+
+### Golden auto-used if present, or pass explicitly
+
+node eval/compare.mjs --prev 2 --golden eval/tests/golden.json
