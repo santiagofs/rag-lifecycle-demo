@@ -1,7 +1,6 @@
 import numpy as np
 from src.db import store
 from config import TOP_K, HYBRID
-from src.retrieve import retrieve_cosine, retrieve_hybrid
 from typing import List
 
 def add_doc(text: str, vector: List[float]) -> None:

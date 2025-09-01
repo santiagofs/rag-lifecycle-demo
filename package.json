@@ -8,6 +8,9 @@
     "eval:api": "node eval/run.mjs eval/tests/golden.json --api",
     "compare": "node eval/compare.mjs",
     "api:start": "python api.py",
-    "cli": "python cli.py"
+    "cli": "python cli.py",
+    "db:init": "python src/db.py --init",
+    "db:stats": "python src/db.py --stats",
+    "db:vacuum": "python src/db.py --vacuum"
   }
 }

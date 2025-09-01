@@ -1,7 +1,14 @@
 import sqlite3
 import numpy as np
+import argparse
+import sys
+import os
 from typing import List, Dict, Optional
 import json
+
+# Add parent directory to path for imports
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from config import DB_PATH
 
 class VectorStore:
@@ -9,12 +16,23 @@ class VectorStore:
         self.db_path = db_path or DB_PATH
         self.init_db()
 
+    def get_connection(self):
+        """Get SQLite connection with optimized PRAGMAs"""
+        conn = sqlite3.connect(self.db_path)
+
+        # Optimize for performance and reliability
+        conn.execute("PRAGMA journal_mode = WAL")  # Write-Ahead Logging
+        conn.execute("PRAGMA synchronous = NORMAL")  # Good balance of speed/safety
+        conn.execute("PRAGMA temp_store = MEMORY")  # Use memory for temp tables
+        conn.execute("PRAGMA foreign_keys = ON")  # Enforce foreign key constraints
+        conn.execute("PRAGMA cache_size = -64000")  # 64MB cache
+        conn.execute("PRAGMA mmap_size = 268435456")  # 256MB memory mapping
+
+        return conn
+
     def init_db(self):
         """Initialize SQLite database with FTS5 and vector tables"""
-        with sqlite3.connect(self.db_path) as conn:
-            # Enable FTS5 extension
-            conn.execute("PRAGMA foreign_keys = ON")
-
+        with self.get_connection() as conn:
             # Create documents table
             conn.execute("""
                 CREATE TABLE IF NOT EXISTS documents (
@@ -44,6 +62,9 @@ class VectorStore:
                 )
             """)
 
+            # Create indexes for performance
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_vectors_doc_id ON vectors(doc_id)")
+
             # Create trigger to sync FTS5 with documents table
             conn.execute("""
                 CREATE TRIGGER IF NOT EXISTS docs_ai AFTER INSERT ON documents BEGIN
@@ -66,7 +87,7 @@ class VectorStore:
 
     def add_document(self, text: str, embedding: List[float], metadata: Optional[Dict] = None) -> int:
         """Add a document with its embedding to the store"""
-        with sqlite3.connect(self.db_path) as conn:
+        with self.get_connection() as conn:
             # Insert document
             cursor = conn.execute(
                 "INSERT INTO documents (text, metadata) VALUES (?, ?)",
@@ -88,7 +109,7 @@ class VectorStore:
         query_vec = np.array(query_embedding, dtype=np.float32)
         query_norm = np.linalg.norm(query_vec) + 1e-9
 
-        with sqlite3.connect(self.db_path) as conn:
+        with self.get_connection() as conn:
             cursor = conn.execute("""
                 SELECT d.id, d.text, d.metadata, v.embedding
                 FROM documents d
@@ -162,7 +183,7 @@ class VectorStore:
 
     def search_fts(self, query_text: str, k: int = 3) -> List[Dict]:
         """Search documents using FTS5 full-text search"""
-        with sqlite3.connect(self.db_path) as conn:
+        with self.get_connection() as conn:
             cursor = conn.execute("""
                 SELECT d.id, d.text, d.metadata, rank
                 FROM documents d
@@ -186,9 +207,63 @@ class VectorStore:
 
     def get_document_count(self) -> int:
         """Get total number of documents"""
-        with sqlite3.connect(self.db_path) as conn:
+        with self.get_connection() as conn:
             cursor = conn.execute("SELECT COUNT(*) FROM documents")
             return cursor.fetchone()[0]
 
+    def get_stats(self) -> Dict:
+        """Get database statistics"""
+        with self.get_connection() as conn:
+            doc_count = conn.execute("SELECT COUNT(*) FROM documents").fetchone()[0]
+            vec_count = conn.execute("SELECT COUNT(*) FROM vectors").fetchone()[0]
+
+            return {
+                'documents': doc_count,
+                'vectors': vec_count,
+                'db_path': self.db_path
+            }
+
+    def vacuum(self) -> None:
+        """Optimize database by removing unused space"""
+        with self.get_connection() as conn:
+            conn.execute("VACUUM")
+            print("✅ Database optimized")
+
 # Global instance
 store = VectorStore()
+
+
+def main():
+    """CLI for database operations"""
+    parser = argparse.ArgumentParser(description="Database management CLI")
+    parser.add_argument("--init", action="store_true", help="Initialize database schema")
+    parser.add_argument("--stats", action="store_true", help="Show database statistics")
+    parser.add_argument("--vacuum", action="store_true", help="Optimize database")
+    parser.add_argument("--db-path", help="Database file path")
+
+    args = parser.parse_args()
+
+    if not any([args.init, args.stats, args.vacuum]):
+        parser.print_help()
+        sys.exit(1)
+
+    # Initialize database manager
+    db_manager = VectorStore(args.db_path)
+
+    if args.init:
+        db_manager.init_db()
+        print(f"✅ Database schema initialized at: {db_manager.db_path}")
+
+    if args.stats:
+        stats = db_manager.get_stats()
+        print(f"\n📊 Database Statistics:")
+        print(f"   Documents: {stats['documents']}")
+        print(f"   Vectors: {stats['vectors']}")
+        print(f"   Database: {stats['db_path']}")
+
+    if args.vacuum:
+        db_manager.vacuum()
+
+
+if __name__ == "__main__":
+    main()

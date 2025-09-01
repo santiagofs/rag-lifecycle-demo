@@ -105,9 +105,10 @@ async def rag_query(query: QueryRequest):
 async def get_stats():
     """Get database statistics"""
     try:
-        count = store.get_document_count()
+        stats = store.get_stats()
         return {
-            "document_count": count,
+            "document_count": stats['documents'],
+            "vector_count": stats['vectors'],
             "status": "healthy"
         }
     except Exception as e:

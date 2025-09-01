@@ -17,8 +17,9 @@ def ingest_documents(docs, metadata=None):
         except Exception as e:
             print(f"✗ Failed to ingest document {i+1}: {e}")
 
-    total_count = store.get_document_count()
-    print(f"\nTotal documents in store: {total_count}")
+    stats = store.get_stats()
+    print(f"\nTotal documents in store: {stats['documents']}")
+    print(f"Total vectors: {stats['vectors']}")
 
 def main():
     parser = argparse.ArgumentParser(description="CLI for document ingestion")
