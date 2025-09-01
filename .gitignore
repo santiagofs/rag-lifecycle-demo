@@ -201,6 +201,10 @@ cython_debug/
 
 # Local SQLite databases
 vectors.db
+
+# SQLite WAL/SHM sidecar files
+*.db-wal
+*.db-shm
 .cursorignore
 .cursorindexingignore
 

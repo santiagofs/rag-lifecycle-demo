@@ -11,6 +11,8 @@
     "cli": "python cli.py",
     "db:init": "python src/db.py --init",
     "db:stats": "python src/db.py --stats",
-    "db:vacuum": "python src/db.py --vacuum"
+    "db:vacuum": "python src/db.py --vacuum",
+    "db:reinit": "python src/db.py --init --force",
+    "ingest": "python src/ingest_cli.py"
   }
 }
