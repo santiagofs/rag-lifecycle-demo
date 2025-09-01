@@ -7,16 +7,17 @@ def get_embedding(text: str, model: str = "nomic-embed-text"):
     """
     Generate a vector embedding for the given text using Ollama.
     """
-    response = requests.post(
-        f"{OLLAMA_BASE_URL}/api/embeddings",
-        json={"model": model, "prompt": text}
-    )
-
-    if response.status_code != 200:
-        raise RuntimeError(f"Ollama error: {response.text}")
-
-    data = response.json()
-    return data["embedding"]
+    try:
+        response = requests.post(
+            f"{OLLAMA_BASE_URL}/api/embeddings",
+            json={"model": model, "prompt": text},
+            timeout=30,
+        )
+        response.raise_for_status()
+        data = response.json()
+        return data["embedding"]
+    except requests.RequestException as e:
+        raise RuntimeError(f"Embeddings request failed: {e}") from e
 
 if __name__ == "__main__":
     sample = "Hello, this is a test for embeddings."

@@ -63,11 +63,31 @@ ollama pull qwen3:8b
 
 ### Run the app
 
+Option A — Python directly:
+
+```bash
+python main.py
+```
+
+Option B — via npm scripts (added in this repo):
+
+```bash
 npm run dev
+```
 
-### Run the tests
+### Run the tests (eval harness)
 
+The evaluation harness calls Ollama's generate endpoint using unified env vars.
+
+```bash
+# optional, defaults shown
+export OLLAMA_BASE_URL=http://localhost:11434
+export OLLAMA_MODEL=llama3.1:8b
+
+npm run eval
+# or
 node eval/run.mjs eval/tests/golden.json
+```
 
 ### Compare two specific archived test runs
 
@@ -84,3 +104,9 @@ node eval/compare.mjs --prev 3
 ### Golden auto-used if present, or pass explicitly
 
 node eval/compare.mjs --prev 2 --golden eval/tests/golden.json
+
+### Environment variables
+
+- `OLLAMA_BASE_URL`: Base URL for Ollama (used by both Python and Node evals). Defaults to `http://localhost:11434`.
+- `OLLAMA_MODEL`: Model name/tag to use for evals (default `llama3.1:8b`).
+- `LLM_MODEL`: Model used by the Python demo app (read by `config.py`).

@@ -1,0 +1,123 @@
+{
+  "summary": {
+    "run_id": "2025-09-01--839552",
+    "model": "llama3.1:8b",
+    "pipeline_version": "dev",
+    "harness_version": "dev",
+    "golden_hash": "499ee6a1",
+    "config_hash": "9e5f4a10",
+    "started_at": "2025-09-01T14:51:11.110Z",
+    "finished_at": "2025-09-01T14:51:33.992Z",
+    "total": 15,
+    "passed": 13,
+    "accuracy": 0.87,
+    "avg_latency_ms": 1027
+  },
+  "items": [
+    {
+      "id": 1,
+      "pass": true,
+      "latency_ms": 1170,
+      "error": null,
+      "actual": "2 years."
+    },
+    {
+      "id": 2,
+      "pass": true,
+      "latency_ms": 711,
+      "error": null,
+      "actual": "Glass, wood, and plastic."
+    },
+    {
+      "id": 3,
+      "pass": true,
+      "latency_ms": 1010,
+      "error": null,
+      "actual": "45-degree joint."
+    },
+    {
+      "id": 4,
+      "pass": true,
+      "latency_ms": 580,
+      "error": null,
+      "actual": "I don't know."
+    },
+    {
+      "id": 5,
+      "pass": true,
+      "latency_ms": 632,
+      "error": null,
+      "actual": "21 days."
+    },
+    {
+      "id": 6,
+      "pass": true,
+      "latency_ms": 6053,
+      "error": null,
+      "actual": "v2 (2024-11-03)."
+    },
+    {
+      "id": 7,
+      "pass": true,
+      "latency_ms": 1177,
+      "error": null,
+      "actual": "LLAMA-3.1:8B."
+    },
+    {
+      "id": 8,
+      "pass": true,
+      "latency_ms": 466,
+      "error": null,
+      "actual": "support@example.com"
+    },
+    {
+      "id": 9,
+      "pass": true,
+      "latency_ms": 310,
+      "error": null,
+      "actual": "Four."
+    },
+    {
+      "id": 10,
+      "pass": false,
+      "latency_ms": 389,
+      "error": null,
+      "actual": "wood, plastic."
+    },
+    {
+      "id": 11,
+      "pass": true,
+      "latency_ms": 355,
+      "error": null,
+      "actual": "PET"
+    },
+    {
+      "id": 12,
+      "pass": true,
+      "latency_ms": 432,
+      "error": null,
+      "actual": "30 days after purchase."
+    },
+    {
+      "id": 13,
+      "pass": false,
+      "latency_ms": 774,
+      "error": null,
+      "actual": "110-120 V"
+    },
+    {
+      "id": 14,
+      "pass": true,
+      "latency_ms": 719,
+      "error": null,
+      "actual": "45°C"
+    },
+    {
+      "id": 15,
+      "pass": true,
+      "latency_ms": 627,
+      "error": null,
+      "actual": "I don't know."
+    }
+  ]
+}

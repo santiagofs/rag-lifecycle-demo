@@ -1,0 +1,10 @@
+{
+  "name": "rag-lifecycle-demo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "python main.py",
+    "eval": "node eval/run.mjs eval/tests/golden.json",
+    "compare": "node eval/compare.mjs"
+  }
+}

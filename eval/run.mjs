@@ -3,7 +3,8 @@ import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 
-const OLLAMA_URL = process.env.OLLAMA_URL || "http://localhost:11434";
+// Prefer unified OLLAMA_BASE_URL, fall back to legacy OLLAMA_URL
+const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || process.env.OLLAMA_URL || "http://localhost:11434";
 const MODEL = process.env.OLLAMA_MODEL || "llama3.1:8b";
 const goldenPath = process.argv[2] || "eval/tests/golden.json";
 const resultsPath = process.argv[3] || "eval/results.json";
@@ -26,12 +27,16 @@ function readGoldenJSON(p) {
 async function generateOllama({ question, context }) {
   const prompt = `Use ONLY the <context> to answer.
 If the answer is not present in context, reply exactly: "I don't know".
+Respond with only the answer phrase, no extra words.
+Copy the wording verbatim from the context when possible, including units and qualifiers exactly as written.
+Never infer, assume, or list items not present in the context.
+If simple math or unit conversion is needed, compute it explicitly using the context.
 <context>
 ${context}
 </context>
 Question: ${question}
 Answer:`;
-  const res = await fetch(`${OLLAMA_URL}/api/generate`, {
+  const res = await fetch(`${OLLAMA_BASE_URL}/api/generate`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ model: MODEL, prompt, stream: false, options: { temperature: 0, top_p: 1 } }),
@@ -65,19 +70,39 @@ function checkDontKnow(out) {
 function checkRegex(out, pattern) {
   const outTrim = (out || "").trim();
 
-  // Strip anchors from the user's pattern, then try exact-ish first
-  const core = String(pattern).replace(/^\^/, "").replace(/\$$/, "");
-  const exactish = `^(?:${core})\\s*[.,;:!?]?$`;
+  // Normalize output similarly to contains() to avoid dash/quote issues
+  function normalizeForRegex(s) {
+    return (s || "")
+      .normalize("NFKC")
+      .replace(/[“”„‟]/g, '"')
+      .replace(/[‘’‚‛]/g, "'")
+      .replace(/[–—]/g, "-")
+      .replace(/[^\S\r\n]+/g, " ")
+      .trim();
+  }
+
+  const normalizedOut = normalizeForRegex(outTrim);
+  const raw = String(pattern);
+
+  // If the pattern explicitly uses leading and trailing wildcards or anchors,
+  // try it as-is first against the normalized output.
+  const hasWildcardEdges = /^\s*\.\*/.test(raw) && /\.\*\s*$/.test(raw);
 
   try {
-    // 1) strict: must be exactly the phrase (+ optional trailing punctuation)
-    if (new RegExp(exactish, "iu").test(outTrim)) {
+    if (hasWildcardEdges || /\^|\$/.test(raw)) {
+      if (new RegExp(raw, "iu").test(normalizedOut)) {
+        return { pass: true, error: null };
+      }
+    }
+
+    // Otherwise, strip anchors and apply exact-ish and tail-bounded checks
+    const core = raw.replace(/^\^/, "").replace(/\$$/, "");
+    const exactish = `^(?:${core})\\s*[.,;:!?]?$`;
+    if (new RegExp(exactish, "iu").test(normalizedOut)) {
       return { pass: true, error: null };
     }
-    // 2) fallback: allow preceding text, but require the phrase as a word-bounded
-    // tail (+ optional trailing punctuation). This fixes #3 ("... 45-degree.")
     const tailBounded = `\\b(?:${core})\\b\\s*[.,;:!?]?$`;
-    if (new RegExp(tailBounded, "iu").test(outTrim)) {
+    if (new RegExp(tailBounded, "iu").test(normalizedOut)) {
       return { pass: true, error: null };
     }
     return { pass: false, error: null };
@@ -94,7 +119,7 @@ async function main() {
   const tests = JSON.parse(testsRaw);
   const golden_hash = crypto.createHash("sha256").update(testsRaw).digest("hex").slice(0, 8);
 
-  console.log(`\nRunning ${tests.length} tests → ${MODEL} @ ${OLLAMA_URL}\n`);
+  console.log(`\nRunning ${tests.length} tests → ${MODEL} @ ${OLLAMA_BASE_URL}\n`);
 
   const items = [];
   let passed = 0;
@@ -157,8 +182,8 @@ async function main() {
     pipeline_version: process.env.PIPELINE_VERSION || "dev",
     harness_version: process.env.HARNESS_VERSION || "dev",
     golden_hash,
-      config_hash: crypto.createHash("sha256").update(JSON.stringify({
-      MODEL, OLLAMA_URL,
+    config_hash: crypto.createHash("sha256").update(JSON.stringify({
+      MODEL, OLLAMA_BASE_URL,
       regex_mode: "exactish_tail",
       normalization: "NFKC_lower_trim_punctdash",
       dontknow_phrase: "i don't know",

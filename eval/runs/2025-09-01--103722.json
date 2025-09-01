@@ -1,0 +1,123 @@
+{
+  "summary": {
+    "run_id": "2025-09-01--103722",
+    "model": "llama3.1:8b",
+    "pipeline_version": "dev",
+    "harness_version": "dev",
+    "golden_hash": "499ee6a1",
+    "config_hash": "9e5f4a10",
+    "started_at": "2025-09-01T14:47:15.588Z",
+    "finished_at": "2025-09-01T14:48:07.045Z",
+    "total": 15,
+    "passed": 13,
+    "accuracy": 0.87,
+    "avg_latency_ms": 3118
+  },
+  "items": [
+    {
+      "id": 1,
+      "pass": true,
+      "latency_ms": 2151,
+      "error": null,
+      "actual": "According to the context, the warranty period is 2 years."
+    },
+    {
+      "id": 2,
+      "pass": true,
+      "latency_ms": 1374,
+      "error": null,
+      "actual": "Glass, wood, and plastic."
+    },
+    {
+      "id": 3,
+      "pass": true,
+      "latency_ms": 2911,
+      "error": null,
+      "actual": "Frame joints can be 45 degrees.\n\nOne join type is a 45-degree joint."
+    },
+    {
+      "id": 4,
+      "pass": true,
+      "latency_ms": 746,
+      "error": null,
+      "actual": "I don't know."
+    },
+    {
+      "id": 5,
+      "pass": true,
+      "latency_ms": 3286,
+      "error": null,
+      "actual": "To convert the lead time from weeks to days, we need to multiply by the number of days in a week.\n\nThere are 7 days in a week. \n\nSo, \n3 weeks × 7 days/week = 21 days\n\nThe answer is 21."
+    },
+    {
+      "id": 6,
+      "pass": true,
+      "latency_ms": 1000,
+      "error": null,
+      "actual": "v2 (2024-11-03)."
+    },
+    {
+      "id": 7,
+      "pass": true,
+      "latency_ms": 819,
+      "error": null,
+      "actual": "LLAMA-3.1:8B."
+    },
+    {
+      "id": 8,
+      "pass": true,
+      "latency_ms": 456,
+      "error": null,
+      "actual": "support@example.com"
+    },
+    {
+      "id": 9,
+      "pass": true,
+      "latency_ms": 917,
+      "error": null,
+      "actual": "There are 4 sizes."
+    },
+    {
+      "id": 10,
+      "pass": false,
+      "latency_ms": 8462,
+      "error": null,
+      "actual": "According to the context, only three items are mentioned as being permitted:\n\n1. Glass\n2. Wood\n3. Plastic\n\nSince these are the only items listed as permitted, any item that is not on this list would be considered not permitted.\n\nTherefore, I will assume that all other items are not permitted."
+    },
+    {
+      "id": 11,
+      "pass": true,
+      "latency_ms": 1462,
+      "error": null,
+      "actual": "PET"
+    },
+    {
+      "id": 12,
+      "pass": true,
+      "latency_ms": 1149,
+      "error": null,
+      "actual": "30 days after purchase."
+    },
+    {
+      "id": 13,
+      "pass": false,
+      "latency_ms": 882,
+      "error": null,
+      "actual": "110-120 V"
+    },
+    {
+      "id": 14,
+      "pass": true,
+      "latency_ms": 1624,
+      "error": null,
+      "actual": "Based on the given <context>, the maximum operating temperature is 45°C."
+    },
+    {
+      "id": 15,
+      "pass": true,
+      "latency_ms": 19524,
+      "error": null,
+      "actual": "I don't know."
+    }
+  ]
+}
