@@ -1,56 +1,41 @@
 #!/usr/bin/env python3
-import argparse
-import json
-from src.embeddings import get_embedding
-from src.db import store
+"""
+Legacy CLI for document ingestion.
+This now delegates to the enhanced ingestion CLI.
+"""
 
-def ingest_documents(docs, metadata=None):
-    """Ingest a list of documents into the vector store"""
-    print(f"Ingesting {len(docs)} documents...")
-
-    for i, doc in enumerate(docs):
-        try:
-            embedding = get_embedding(doc)
-            doc_metadata = metadata[i] if metadata and i < len(metadata) else None
-            doc_id = store.add_document(doc, embedding, doc_metadata)
-            print(f"✓ Document {i+1} ingested with ID {doc_id}")
-        except Exception as e:
-            print(f"✗ Failed to ingest document {i+1}: {e}")
-
-    stats = store.get_stats()
-    print(f"\nTotal documents in store: {stats['documents']}")
-    print(f"Total vectors: {stats['vectors']}")
+import sys
+import subprocess
+from pathlib import Path
 
 def main():
-    parser = argparse.ArgumentParser(description="CLI for document ingestion")
-    parser.add_argument("--docs", nargs="+", help="Documents to ingest")
-    parser.add_argument("--file", help="JSON file containing documents")
-    parser.add_argument("--metadata", help="JSON file containing metadata")
+    """Legacy CLI that delegates to enhanced ingestion CLI"""
+    print("⚠️  This CLI is deprecated. Use 'npm run ingest' instead.")
+    print("   Enhanced features: .txt, .md, .html, .pdf support, block-based processing")
+    print()
 
-    args = parser.parse_args()
+    # Check if we have arguments to pass through
+    if len(sys.argv) > 1:
+        print("🔄 Delegating to enhanced ingestion CLI...")
+        print()
 
-    if args.docs:
-        ingest_documents(args.docs)
-    elif args.file:
-        with open(args.file, 'r') as f:
-            data = json.load(f)
-            docs = data.get('documents', [])
-            metadata = data.get('metadata', None)
-            ingest_documents(docs, metadata)
+        # Construct the command for the enhanced CLI
+        enhanced_args = ["python", "src/ingest_cli.py"] + sys.argv[1:]
+
+        try:
+            # Run the enhanced CLI
+            result = subprocess.run(enhanced_args, check=True)
+            return result.returncode
+        except subprocess.CalledProcessError as e:
+            print(f"❌ Enhanced CLI failed: {e}")
+            return e.returncode
+        except FileNotFoundError:
+            print("❌ Enhanced ingestion CLI not found: src/ingest_cli.py")
+            return 1
     else:
-        # Default sample documents
-        sample_docs = [
-            "LangChain is a framework to build LLM applications.",
-            "Vector databases store embeddings for semantic search.",
-            "RAG augments prompts with retrieved context to improve answers.",
-            "PostgreSQL with pgvector can store and search vectors efficiently.",
-            "SQLite with FTS5 provides full-text search capabilities.",
-            "Cosine similarity measures the angle between two vectors.",
-            "Embeddings represent text as high-dimensional vectors.",
-            "Retrieval-augmented generation combines search with language models."
-        ]
-        print("No documents provided, using sample documents...")
-        ingest_documents(sample_docs)
+        print("Usage: python cli.py --path <file_or_directory>")
+        print("   or: npm run ingest -- --path <file_or_directory>")
+        return 1
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

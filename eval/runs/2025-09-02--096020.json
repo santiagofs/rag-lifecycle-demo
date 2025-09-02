@@ -1,0 +1,123 @@
+{
+  "summary": {
+    "run_id": "2025-09-02--096020",
+    "model": "llama3.1:8b",
+    "pipeline_version": "dev",
+    "harness_version": "dev",
+    "golden_hash": "499ee6a1",
+    "config_hash": "2d4e454d",
+    "started_at": "2025-09-02T14:19:17.071Z",
+    "finished_at": "2025-09-02T14:21:21.234Z",
+    "total": 15,
+    "passed": 0,
+    "accuracy": 0,
+    "avg_latency_ms": 7078
+  },
+  "items": [
+    {
+      "id": 1,
+      "pass": false,
+      "latency_ms": 6770,
+      "error": null,
+      "actual": "There is no mention of a \"warranty period\" in the provided text. The text discusses Cosine similarity, SQLite with FTS5, the chunking process for document processing in RAG systems, and Retrieval-Augmented Generation (RAG) but does not mention warranties or any similar concept related to products or services."
+    },
+    {
+      "id": 2,
+      "pass": false,
+      "latency_ms": 7480,
+      "error": null,
+      "actual": "There is no question provided for me to answer. The text appears to be a passage explaining Retrieval-Augmented Generation (RAG) systems and their components, but it doesn't ask a specific question that needs answering.\n\nHowever, I can provide an answer based on the context of the passage:\n\nAccording to the text, vector databases are allowed in RAG systems as they enable efficient semantic search. Documents are stored in these databases with embeddings, allowing for similarity metrics to be used to find relevant passages."
+    },
+    {
+      "id": 3,
+      "pass": false,
+      "latency_ms": 6132,
+      "error": null,
+      "actual": "There is no information about join types in the provided text, so it's not possible to name one join type based on this context. The text discusses concepts related to Retrieval-Augmented Generation (RAG) systems and their implementation using SQLite and FTS5, but does not mention database joins."
+    },
+    {
+      "id": 4,
+      "pass": false,
+      "latency_ms": 9165,
+      "error": null,
+      "actual": "The context does not mention anything about a \"return window\". It appears to be discussing Retrieval-Augmented Generation (RAG) systems and their components, as well as some technical details related to model tracking and vector databases. Therefore, there is no answer to provide for this question."
+    },
+    {
+      "id": 5,
+      "pass": false,
+      "latency_ms": 13318,
+      "error": null,
+      "actual": "The question doesn't match the context provided. The context is about cosine similarity and its application in text embedding systems using SQLite with FTS5, but the question asks to convert something called \"lead time\" to days.\n\nThere's no mention of lead time or days in the given context. It seems there might be a mismatch between the question and the provided context. If you could provide more information or clarify what you'd like me to answer based on the given text, I'll be happy to help!"
+    },
+    {
+      "id": 6,
+      "pass": false,
+      "latency_ms": 6608,
+      "error": null,
+      "actual": "Unfortunately, there is no explicit statement in the text that provides a specific date for the last revision. However, based on the context and the mention of \"Model tracking\" as a crucial aspect of RAG systems, we can infer that this information is likely to be up-to-date or at least reflect the current state of knowledge.\n\nSo, if I had to provide an answer, it would be:\n\nThere is no specific revision date mentioned."
+    },
+    {
+      "id": 7,
+      "pass": false,
+      "latency_ms": 3480,
+      "error": null,
+      "actual": "There is no specific question asking for a model name, but I assume you want me to state the model name mentioned in the context.\n\nThe answer is:\n\nEmbedding Model"
+    },
+    {
+      "id": 8,
+      "pass": false,
+      "latency_ms": 6445,
+      "error": null,
+      "actual": "There is no mention of a \"support email\" in the provided context. The text appears to be discussing technical details related to Retrieval-Augmented Generation (RAG) systems, including vector databases and document processing."
+    },
+    {
+      "id": 9,
+      "pass": false,
+      "latency_ms": 5152,
+      "error": null,
+      "actual": "The context does not provide information about the number of sizes offered. It discusses various concepts related to RAG (Relevance Aware Generator) systems, including text search capabilities, chunking process, cosine similarity, and model tracking. However, it does mention \"chunk size\" which is a single parameter used in the chunking process, but it does not provide information about multiple sizes being offered."
+    },
+    {
+      "id": 10,
+      "pass": false,
+      "latency_ms": 9298,
+      "error": null,
+      "actual": "The question is asking which items are NOT permitted in the context of Retrieval-Augmented Generation (RAG) systems.\n\nBased on the text, I would say that \"Long documents\" are actually CHUNKED into smaller pieces, but there is no mention of what is explicitly NOT permitted. However, if we infer from the text, it seems like traditional keyword-based search is being replaced by vector databases for efficient semantic search, implying that traditional keyword-based search might be less preferred or not recommended.\n\nSo, a possible answer could be: Traditional keyword-based search.\n\nHowever, considering the format of the original text and the context provided, I would say that the question seems to imply the absence of a list of prohibited items. Therefore, it is more likely that the correct answer is \"None\" or \"There are no items not permitted\"."
+    },
+    {
+      "id": 11,
+      "pass": false,
+      "latency_ms": 5896,
+      "error": null,
+      "actual": "There is no mention of a \"plastic type\" in the provided context. The text discusses Retrieval-Augmented Generation (RAG) technique, its pipeline components, and some related concepts such as chunking process, model tracking, and pre-computed norms. Therefore, there is no plastic type mentioned to name."
+    },
+    {
+      "id": 12,
+      "pass": false,
+      "latency_ms": 9748,
+      "error": null,
+      "actual": "The text does not mention when \"coverage\" starts. It mentions chunking process, which is splitting long documents into smaller chunks for effective processing in RAG systems, but it does not discuss a concept called \"coverage\". \n\nHowever, based on the provided context, if we are talking about retrieval coverage or document coverage in the RAG system, it can be inferred that the chunk size and overlap parameters play an essential role. But again, there is no clear information on when this coverage starts."
+    },
+    {
+      "id": 13,
+      "pass": false,
+      "latency_ms": 5056,
+      "error": null,
+      "actual": "There is no mention of voltage in the provided text. The context appears to be about Retrieval-Augmented Generation (RAG) systems, vector databases, and similarity metrics for comparing embeddings. There is no information related to electrical engineering or voltage requirements."
+    },
+    {
+      "id": 14,
+      "pass": false,
+      "latency_ms": 6279,
+      "error": null,
+      "actual": "There is no mention of \"operating temperature\" in the provided context. The text discusses Retrieval-Augmented Generation (RAG) techniques, a pipeline consisting of retriever, generator, and knowledge base components, model tracking, pre-computed norms for similarity calculations, and an ingestion pipeline for handling file formats and updates.\n\nTherefore, I cannot provide an answer to the question about maximum operating temperature."
+    },
+    {
+      "id": 15,
+      "pass": false,
+      "latency_ms": 5346,
+      "error": null,
+      "actual": "There is no mention of \"steel\" in the provided context. The discussion revolves around text search capabilities within SQLite databases, vector storage for embeddings, and cosine similarity metrics. Therefore, the answer to whether steel is allowed would be \"no\", as it's not relevant or mentioned anywhere in the given text."
+    }
+  ]
+}

@@ -11,6 +11,7 @@ import json
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from config import DB_PATH, EMBED_MODEL_NAME, EMBED_MODEL_DIGEST
+from src.utils.ids import compute_doc_id, compute_emb_id
 
 class VectorStore:
     def __init__(self, db_path: str = None, auto_init: bool = True):
@@ -114,14 +115,14 @@ class VectorStore:
         digest = digest or EMBED_MODEL_DIGEST
 
         # Deterministic IDs
-        doc_id = hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
+        doc_id = compute_doc_id(text)
 
         vec_array = np.array(embedding, dtype=np.float32)
         norm = float(np.linalg.norm(vec_array))
         dim = int(vec_array.size)
         embedding_blob = vec_array.tobytes()
 
-        emb_id = hashlib.sha256(f"{doc_id}:{model}".encode("utf-8")).hexdigest()[:16]
+        emb_id = compute_emb_id(doc_id, model)
 
         with self.get_connection() as conn:
             # Insert or ignore document
@@ -282,6 +283,12 @@ class VectorStore:
             conn.execute("VACUUM")
             print("✅ Database optimized")
 
+    def checkpoint(self) -> None:
+        """Create a WAL checkpoint to truncate the WAL file"""
+        with self.get_connection() as conn:
+            conn.execute("PRAGMA wal_checkpoint(TRUNCATE)")
+            print("✅ WAL checkpoint created")
+
 
 def main():
     """CLI for database operations"""
@@ -290,11 +297,12 @@ def main():
     parser.add_argument("--force", action="store_true", help="Force reinitialize (drop existing tables)")
     parser.add_argument("--stats", action="store_true", help="Show database statistics")
     parser.add_argument("--vacuum", action="store_true", help="Optimize database")
+    parser.add_argument("--checkpoint", action="store_true", help="Create WAL checkpoint")
     parser.add_argument("--db-path", help="Database file path")
 
     args = parser.parse_args()
 
-    if not any([args.init, args.stats, args.vacuum]):
+    if not any([args.init, args.stats, args.vacuum, args.checkpoint]):
         parser.print_help()
         sys.exit(1)
 
@@ -328,6 +336,9 @@ def main():
 
     if args.vacuum:
         db_manager.vacuum()
+
+    if args.checkpoint:
+        db_manager.checkpoint()
 
 
 # Global instance - created after main() to avoid schema conflicts

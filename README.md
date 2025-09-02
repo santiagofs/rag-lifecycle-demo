@@ -51,6 +51,12 @@ ollama pull nomic-embed-text:latest
 ollama pull qwen3:8b
 ```
 
+**Note**: The requirements now include additional dependencies for Week 3 document processing:
+
+- `beautifulsoup4`: HTML parsing and text extraction
+- `markdown`: Markdown processing
+- `PyPDF2`: PDF text extraction
+
 ### Setup Windows
 
 ```powershell
@@ -60,6 +66,12 @@ pip install -r requirements.txt
 ollama pull nomic-embed-text:latest
 ollama pull qwen3:8b
 ```
+
+**Note**: The requirements now include additional dependencies for Week 3 document processing:
+
+- `beautifulsoup4`: HTML parsing and text extraction
+- `markdown`: Markdown processing
+- `PyPDF2`: PDF text extraction
 
 ### Run the app
 
@@ -73,6 +85,80 @@ Option B — via npm scripts (added in this repo):
 
 ```bash
 npm run dev
+```
+
+## Week 3 — Document Ingestion
+
+The enhanced ingestion pipeline supports multiple document formats with structured processing and deterministic IDs.
+
+### Supported Formats
+
+- **Text files** (`.txt`): Basic text processing
+- **Markdown files** (`.md`): Heading-based block extraction with title preservation
+- **HTML files** (`.html`): Text extraction with title and paragraph separation
+- **PDF files** (`.pdf`): Page-based processing with paragraph extraction
+
+### Basic Usage
+
+```bash
+# Ingest a single file
+npm run ingest -- --path sample/sample.md
+
+# Ingest all supported files in a directory
+npm run ingest -- --path sample/
+
+# Custom chunking parameters
+npm run ingest -- --path sample/ --chunk-size 300 --chunk-overlap 25
+```
+
+### Features
+
+- **Block-based processing**: Documents are first split into logical blocks (sections, paragraphs, pages)
+- **Deterministic IDs**: Content-based hashing ensures identical content gets the same ID
+- **Duplicate detection**: Automatic skipping of existing documents and embeddings
+- **Metadata preservation**: Source, title, page numbers, and section information
+- **Idempotent operation**: Safe to run multiple times without creating duplicates
+
+### Database Management
+
+```bash
+# Initialize database schema
+npm run db:init
+
+# Force reinitialize (drops existing data)
+npm run db:reinit
+
+# Check database statistics
+npm run db:stats
+
+# Optimize database
+npm run db:vacuum
+
+# Create WAL checkpoint
+npm run db:checkpoint
+```
+
+### Environment Variables
+
+- `CHUNK_SIZE`: Maximum characters per chunk (default: 500)
+- `CHUNK_OVERLAP`: Overlap between chunks (default: 50)
+- `TOP_K`: Number of results to retrieve (default: 5)
+- `HYBRID`: Enable hybrid search (default: false)
+
+### Troubleshooting
+
+**Missing dependencies**: If you encounter `ModuleNotFoundError` for `bs4`, `markdown`, or `PyPDF2`, run:
+
+```bash
+pip install -r requirements.txt
+```
+
+**PDF processing**: PDF support requires `PyPDF2`. If you don't need PDF support, you can skip this dependency.
+
+**Database schema changes**: If you encounter database errors after schema updates, run:
+
+```bash
+npm run db:reinit
 ```
 
 ### Run the tests (eval harness)

@@ -6,6 +6,7 @@
     "dev": "python main.py",
     "eval": "node eval/run.mjs eval/tests/golden.json",
     "eval:api": "node eval/run.mjs eval/tests/golden.json --api",
+    "eval:db": "node eval/retrieval_eval.mjs eval/tests/golden.json",
     "compare": "node eval/compare.mjs",
     "api:start": "python api.py",
     "cli": "python cli.py",
@@ -13,6 +14,7 @@
     "db:stats": "python src/db.py --stats",
     "db:vacuum": "python src/db.py --vacuum",
     "db:reinit": "python src/db.py --init --force",
+    "db:checkpoint": "python src/db.py --checkpoint",
     "ingest": "python src/ingest_cli.py"
   }
 }

@@ -2,10 +2,10 @@
 """
 Enhanced Ingestion Pipeline CLI
 Chunk→embed→store in SQLite with deterministic IDs and duplicate detection.
+Supports .txt, .md, .html, .pdf files.
 """
 
 import argparse
-import hashlib
 import os
 import sys
 from pathlib import Path
@@ -18,17 +18,9 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from src.embeddings import get_embedding
 from src.db import store
+from src.loaders import get_loader_for_file, DocumentBlock
+from src.utils.ids import compute_doc_id, compute_emb_id
 from config import CHUNK_SIZE, CHUNK_OVERLAP, EMBED_MODEL_NAME, EMBED_MODEL_DIGEST
-
-
-def compute_doc_id(text: str) -> str:
-    """Compute deterministic document ID from text content"""
-    return hashlib.sha256(text.encode('utf-8')).hexdigest()[:16]
-
-
-def compute_emb_id(doc_id: str, model: str) -> str:
-    """Compute deterministic embedding ID from document ID and model"""
-    return hashlib.sha256(f"{doc_id}:{model}".encode('utf-8')).hexdigest()[:16]
 
 
 def chunk_text(text: str, chunk_size: int = None, chunk_overlap: int = None) -> List[str]:
@@ -76,26 +68,37 @@ def read_text_file(file_path: str) -> str:
             return f.read()
 
 
+def load_document_blocks(file_path: str) -> List[DocumentBlock]:
+    """Load document blocks using appropriate loader"""
+    try:
+        loader = get_loader_for_file(file_path)
+        return loader(file_path)
+    except Exception as e:
+        print(f"   ⚠️  Failed to load with specialized loader: {e}")
+        # Fallback to text loader
+        return [DocumentBlock(
+            text=read_text_file(file_path),
+            metadata={'source': file_path, 'section': 'fallback_text'}
+        )]
+
+
 def ingest_file(file_path: str, chunk_size: int = None, chunk_overlap: int = None) -> Dict:
-    """Ingest a single text file with chunking and duplicate detection"""
+    """Ingest a single file with chunking and duplicate detection"""
     print(f"📄 Processing: {file_path}")
 
-    # Read file
+    # Load document blocks
     try:
-        text = read_text_file(file_path)
-        print(f"   📖 Read {len(text)} characters")
+        blocks = load_document_blocks(file_path)
+        print(f"   📖 Loaded {len(blocks)} blocks")
     except Exception as e:
-        print(f"   ❌ Failed to read file: {e}")
+        print(f"   ❌ Failed to load file: {e}")
         return {'error': str(e)}
 
-    # Chunk text
-    chunks = chunk_text(text, chunk_size, chunk_overlap)
-    print(f"   ✂️  Split into {len(chunks)} chunks")
-
-    # Process chunks
+    # Process blocks and chunks
     stats = {
         'file': file_path,
-        'total_chunks': len(chunks),
+        'total_blocks': len(blocks),
+        'total_chunks': 0,
         'new_documents': 0,
         'new_embeddings': 0,
         'skipped_documents': 0,
@@ -105,56 +108,68 @@ def ingest_file(file_path: str, chunk_size: int = None, chunk_overlap: int = Non
 
     # Use single transaction for all chunks from this file
     with store.get_connection() as conn:
-        for i, chunk in enumerate(chunks):
-            try:
-                # Compute deterministic IDs
-                doc_id = compute_doc_id(chunk)
-                emb_id = compute_emb_id(doc_id, EMBED_MODEL_NAME)
+        for block_idx, block in enumerate(blocks):
+            # Chunk the block text
+            chunks = chunk_text(block.text, chunk_size, chunk_overlap)
+            stats['total_chunks'] += len(chunks)
 
-                # Check if document already exists
-                cursor = conn.execute("SELECT id FROM documents WHERE id = ?", (doc_id,))
-                doc_exists = cursor.fetchone() is not None
+            for chunk_idx, chunk in enumerate(chunks):
+                try:
+                    # Compute deterministic IDs
+                    doc_id = compute_doc_id(chunk)
+                    emb_id = compute_emb_id(doc_id, EMBED_MODEL_NAME)
 
-                if not doc_exists:
-                    # Insert document
-                    conn.execute(
-                        "INSERT OR IGNORE INTO documents (id, text, metadata) VALUES (?, ?, ?)",
-                        (doc_id, chunk, json.dumps({'source': file_path, 'chunk_index': i}))
-                    )
-                    stats['new_documents'] += 1
-                    print(f"   ✅ Chunk {i+1}: New document {doc_id[:8]}...")
-                else:
-                    stats['skipped_documents'] += 1
-                    print(f"   ⏭️  Chunk {i+1}: Skipped existing document {doc_id[:8]}...")
+                    # Merge block metadata with chunk metadata
+                    chunk_metadata = {
+                        **block.metadata,
+                        'chunk_index': chunk_idx,
+                        'block_index': block_idx
+                    }
 
-                # Check if embedding already exists
-                cursor = conn.execute("SELECT id FROM vectors WHERE id = ?", (emb_id,))
-                emb_exists = cursor.fetchone() is not None
+                    # Check if document already exists
+                    cursor = conn.execute("SELECT id FROM documents WHERE id = ?", (doc_id,))
+                    doc_exists = cursor.fetchone() is not None
 
-                if not emb_exists:
-                    # Get embedding
-                    embedding = get_embedding(chunk)
+                    if not doc_exists:
+                        # Insert document
+                        conn.execute(
+                            "INSERT OR IGNORE INTO documents (id, text, metadata) VALUES (?, ?, ?)",
+                            (doc_id, chunk, json.dumps(chunk_metadata))
+                        )
+                        stats['new_documents'] += 1
+                        print(f"   ✅ Block {block_idx+1}, Chunk {chunk_idx+1}: New document {doc_id[:8]}...")
+                    else:
+                        stats['skipped_documents'] += 1
+                        print(f"   ⏭️  Block {block_idx+1}, Chunk {chunk_idx+1}: Skipped existing document {doc_id[:8]}...")
 
-                    # Compute norm
-                    vec_array = np.array(embedding, dtype=np.float32)
-                    norm = float(np.linalg.norm(vec_array))
+                    # Check if embedding already exists
+                    cursor = conn.execute("SELECT id FROM vectors WHERE id = ?", (emb_id,))
+                    emb_exists = cursor.fetchone() is not None
 
-                    # Insert embedding
-                    embedding_blob = vec_array.tobytes()
-                    conn.execute("""
-                        INSERT OR IGNORE INTO vectors (id, doc_id, vec, norm, model, digest, dim)
-                        VALUES (?, ?, ?, ?, ?, ?, ?)
-                    """, (emb_id, doc_id, embedding_blob, norm, EMBED_MODEL_NAME, EMBED_MODEL_DIGEST, len(embedding)))
+                    if not emb_exists:
+                        # Get embedding
+                        embedding = get_embedding(chunk)
 
-                    stats['new_embeddings'] += 1
-                    print(f"   🧠 Chunk {i+1}: New embedding {emb_id[:8]}...")
-                else:
-                    stats['skipped_embeddings'] += 1
-                    print(f"   ⏭️  Chunk {i+1}: Skipped existing embedding {emb_id[:8]}...")
+                        # Compute norm
+                        vec_array = np.array(embedding, dtype=np.float32)
+                        norm = float(np.linalg.norm(vec_array))
 
-            except Exception as e:
-                stats['errors'] += 1
-                print(f"   ❌ Chunk {i+1}: Error - {e}")
+                        # Insert embedding
+                        embedding_blob = vec_array.tobytes()
+                        conn.execute("""
+                            INSERT OR IGNORE INTO vectors (id, doc_id, vec, norm, model, digest, dim)
+                            VALUES (?, ?, ?, ?, ?, ?, ?)
+                        """, (emb_id, doc_id, embedding_blob, norm, EMBED_MODEL_NAME, EMBED_MODEL_DIGEST, len(embedding)))
+
+                        stats['new_embeddings'] += 1
+                        print(f"   🧠 Block {block_idx+1}, Chunk {chunk_idx+1}: New embedding {emb_id[:8]}...")
+                    else:
+                        stats['skipped_embeddings'] += 1
+                        print(f"   ⏭️  Block {block_idx+1}, Chunk {chunk_idx+1}: Skipped existing embedding {emb_id[:8]}...")
+
+                except Exception as e:
+                    stats['errors'] += 1
+                    print(f"   ❌ Block {block_idx+1}, Chunk {chunk_idx+1}: Error - {e}")
 
         conn.commit()
 
@@ -162,21 +177,27 @@ def ingest_file(file_path: str, chunk_size: int = None, chunk_overlap: int = Non
 
 
 def ingest_directory(dir_path: str, chunk_size: int = None, chunk_overlap: int = None) -> List[Dict]:
-    """Ingest all .txt files in a directory"""
+    """Ingest all supported files in a directory"""
     dir_path = Path(dir_path)
     if not dir_path.is_dir():
         print(f"❌ Not a directory: {dir_path}")
         return []
 
-    txt_files = list(dir_path.glob("*.txt"))
-    if not txt_files:
-        print(f"❌ No .txt files found in {dir_path}")
+    # Find all supported files
+    supported_extensions = {'.txt', '.md', '.html', '.pdf'}
+    files = []
+    for ext in supported_extensions:
+        files.extend(dir_path.glob(f"*{ext}"))
+
+    if not files:
+        print(f"❌ No supported files found in {dir_path}")
+        print(f"   Supported extensions: {', '.join(supported_extensions)}")
         return []
 
-    print(f"📁 Found {len(txt_files)} .txt files in {dir_path}")
+    print(f"📁 Found {len(files)} supported files in {dir_path}")
 
     results = []
-    for file_path in txt_files:
+    for file_path in files:
         result = ingest_file(str(file_path), chunk_size, chunk_overlap)
         results.append(result)
         print()  # Empty line between files
@@ -206,8 +227,9 @@ def main():
     print()
 
     if path.is_file():
-        if path.suffix.lower() != '.txt':
-            print(f"❌ Only .txt files are supported: {path}")
+        if path.suffix.lower() not in {'.txt', '.md', '.html', '.pdf'}:
+            print(f"❌ Unsupported file type: {path}")
+            print(f"   Supported extensions: .txt, .md, .html, .pdf")
             sys.exit(1)
 
         result = ingest_file(str(path), args.chunk_size, args.chunk_overlap)
@@ -217,6 +239,8 @@ def main():
 
     # Summary
     print("📊 Ingestion Summary:")
+    total_blocks = sum(r.get('total_blocks', 0) for r in results)
+    total_chunks = sum(r.get('total_chunks', 0) for r in results)
     total_new_docs = sum(r.get('new_documents', 0) for r in results)
     total_new_embs = sum(r.get('new_embeddings', 0) for r in results)
     total_skipped_docs = sum(r.get('skipped_documents', 0) for r in results)
@@ -224,6 +248,8 @@ def main():
     total_errors = sum(r.get('errors', 0) for r in results)
 
     print(f"   📄 Files processed: {len(results)}")
+    print(f"   📦 Blocks processed: {total_blocks}")
+    print(f"   ✂️  Chunks created: {total_chunks}")
     print(f"   ✅ New documents: {total_new_docs}")
     print(f"   🧠 New embeddings: {total_new_embs}")
     print(f"   ⏭️  Skipped documents: {total_skipped_docs}")

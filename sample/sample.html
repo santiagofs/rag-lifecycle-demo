@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sample HTML Document</title>
+  </head>
+  <body>
+    <h1>Sample HTML Document</h1>
+
+    <p>
+      This is a sample HTML document for testing the enhanced ingestion
+      pipeline. It demonstrates how HTML content is processed and extracted.
+    </p>
+
+    <h2>HTML Processing Features</h2>
+
+    <p>
+      The HTML loader extracts visible text content while preserving structure.
+      It removes script and style elements to focus on meaningful content.
+    </p>
+
+    <p>Key features include:</p>
+    <ul>
+      <li>Title extraction from &lt;title&gt; tags</li>
+      <li>Text extraction from body content</li>
+      <li>Paragraph-based chunking</li>
+      <li>Metadata preservation</li>
+    </ul>
+
+    <h2>Technical Implementation</h2>
+
+    <p>
+      The HTML processing uses BeautifulSoup for parsing and text extraction. It
+      handles various HTML structures and preserves document hierarchy.
+    </p>
+
+    <script>
+      // This script content should be ignored during processing
+      console.log("Script content")
+    </script>
+
+    <style>
+      /* This style content should also be ignored */
+      body {
+        font-family: Arial, sans-serif;
+      }
+    </style>
+  </body>
+</html>
