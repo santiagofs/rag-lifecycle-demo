@@ -1,0 +1,21 @@
+Retrieval-Augmented Generation (RAG) is a powerful technique that combines the strengths of large language models with external knowledge retrieval. This approach addresses one of the key limitations of traditional language models: their inability to access up-to-date or domain-specific information that wasn't present in their training data.
+
+The RAG pipeline typically consists of three main components: a retriever, a generator, and a knowledge base. The retriever searches through a collection of documents to find the most relevant passages for a given query. These retrieved passages are then combined with the original query and fed into the generator, which produces a final response.
+
+Vector databases play a crucial role in modern RAG systems by enabling efficient semantic search. Instead of relying on traditional keyword-based search, vector databases store document embeddings and use similarity metrics to find the most relevant content. This allows for more nuanced and contextually appropriate retrieval.
+
+Embeddings are numerical representations of text that capture semantic meaning. They are typically generated using neural networks trained on large text corpora. The quality of embeddings directly impacts the performance of the retrieval system, as better embeddings lead to more accurate similarity calculations.
+
+Cosine similarity is a commonly used metric for comparing embeddings. It measures the cosine of the angle between two vectors, providing a value between -1 and 1, where 1 indicates perfect similarity. This metric is particularly useful for text embeddings because it focuses on the direction of the vectors rather than their magnitude.
+
+SQLite with FTS5 provides an excellent foundation for building RAG systems. FTS5 (Full-Text Search version 5) is a powerful extension that enables efficient text search capabilities within SQLite databases. When combined with vector storage for embeddings, SQLite can serve as a complete knowledge base for RAG applications.
+
+The chunking process is essential for effective document processing in RAG systems. Long documents are typically split into smaller, overlapping chunks to ensure that relevant information can be retrieved even when it spans multiple sections. The chunk size and overlap parameters need to be carefully tuned based on the specific use case and document characteristics.
+
+Deterministic document IDs are important for maintaining consistency in RAG systems. By using content-based hashing to generate document IDs, we can ensure that identical content always receives the same identifier. This enables efficient duplicate detection and prevents redundant processing of the same content.
+
+Model tracking is another crucial aspect of RAG systems. By storing information about which embedding model was used to generate each vector, we can ensure consistency and enable model-specific optimizations. This is particularly important when upgrading embedding models or comparing performance across different models.
+
+Pre-computed norms can significantly improve the performance of similarity calculations. By storing the L2 norm of each embedding vector, we can avoid recalculating these values during search operations, leading to faster retrieval times, especially for large-scale systems.
+
+The ingestion pipeline is a critical component that determines the quality and efficiency of the entire RAG system. A well-designed pipeline should handle various file formats, implement proper chunking strategies, and provide robust error handling. It should also support incremental updates and maintain data consistency.
