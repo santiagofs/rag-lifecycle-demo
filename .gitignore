@@ -213,3 +213,6 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 eval/results.json
+
+# Local eval reports
+--api
