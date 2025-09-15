@@ -1,0 +1,230 @@
+{
+  "summary": {
+    "run_id": "2025-09-02--732698",
+    "evaluation_type": "retrieval_hit_at_k",
+    "top_k": 5,
+    "api_url": "http://localhost:8000",
+    "pipeline_version": "dev",
+    "harness_version": "dev",
+    "golden_hash": "499ee6a1",
+    "config_hash": "d76445aa",
+    "started_at": "2025-09-02T14:17:03.166Z",
+    "finished_at": "2025-09-02T14:17:04.086Z",
+    "total": 15,
+    "hits": 0,
+    "hit_rate": 0,
+    "avg_latency_ms": 18
+  },
+  "items": [
+    {
+      "id": 1,
+      "hit": false,
+      "latency_ms": 31,
+      "error": null,
+      "question": "What is the warranty period?",
+      "expected_substring": "2 years",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "Cosine similarity is a commonly used metric for comparing embeddings. It measures the cosine of the angle between two vectors, providing a value between -1 and 1, where 1 indicates perfect similarity. This metric is particularly useful for text embeddings because it focuses on the direction of the vectors rather than their magnitude.\n\nSQLite with FTS5 provides an excellent foundation for building RAG systems. FTS5 (Full-Text Search version 5) is a powerful extension that enables efficient",
+        "5) is a powerful extension that enables efficient text search capabilities within SQLite databases. When combined with vector storage for embeddings, SQLite can serve as a complete knowledge base for RAG applications.\n\nThe chunking process is essential for effective document processing in RAG systems. Long documents are typically split into smaller, overlapping chunks to ensure that relevant information can be retrieved even when it spans multiple sections. The chunk size and overlap parameters",
+        "Retrieval-Augmented Generation (RAG) is a powerful technique that combines the strengths of large language models with external knowledge retrieval. This approach addresses one of the key limitations of traditional language models: their inability to access up-to-date or domain-specific information that wasn't present in their training data.\n\nThe RAG pipeline typically consists of three main components: a retriever, a generator, and a knowledge base. The retriever searches through a collection"
+      ]
+    },
+    {
+      "id": 2,
+      "hit": false,
+      "latency_ms": 17,
+      "error": null,
+      "question": "Which materials are allowed?",
+      "expected_substring": "(?=.*\\bglass\\b)(?=.*\\bwood\\b)(?=.*\\bplastic\\b).+",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "5) is a powerful extension that enables efficient text search capabilities within SQLite databases. When combined with vector storage for embeddings, SQLite can serve as a complete knowledge base for RAG applications.\n\nThe chunking process is essential for effective document processing in RAG systems. Long documents are typically split into smaller, overlapping chunks to ensure that relevant information can be retrieved even when it spans multiple sections. The chunk size and overlap parameters",
+        "Retrieval-Augmented Generation (RAG) is a powerful technique that combines the strengths of large language models with external knowledge retrieval. This approach addresses one of the key limitations of traditional language models: their inability to access up-to-date or domain-specific information that wasn't present in their training data.\n\nThe RAG pipeline typically consists of three main components: a retriever, a generator, and a knowledge base. The retriever searches through a collection",
+        "base. The retriever searches through a collection of documents to find the most relevant passages for a given query. These retrieved passages are then combined with the original query and fed into the generator, which produces a final response.\n\nVector databases play a crucial role in modern RAG systems by enabling efficient semantic search. Instead of relying on traditional keyword-based search, vector databases store document embeddings and use similarity metrics to find the most relevant"
+      ]
+    },
+    {
+      "id": 3,
+      "hit": false,
+      "latency_ms": 17,
+      "error": null,
+      "question": "Name one join type.",
+      "expected_substring": ".*\\b(45(?:\\s*degrees|-degree)|vertical outside|horizontal outside)\\b.*",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "5) is a powerful extension that enables efficient text search capabilities within SQLite databases. When combined with vector storage for embeddings, SQLite can serve as a complete knowledge base for RAG applications.\n\nThe chunking process is essential for effective document processing in RAG systems. Long documents are typically split into smaller, overlapping chunks to ensure that relevant information can be retrieved even when it spans multiple sections. The chunk size and overlap parameters",
+        "use similarity metrics to find the most relevant content. This allows for more nuanced and contextually appropriate retrieval.\n\nEmbeddings are numerical representations of text that capture semantic meaning. They are typically generated using neural networks trained on large text corpora. The quality of embeddings directly impacts the performance of the retrieval system, as better embeddings lead to more accurate similarity calculations.\n\nCosine similarity is a commonly used metric for",
+        "Cosine similarity is a commonly used metric for comparing embeddings. It measures the cosine of the angle between two vectors, providing a value between -1 and 1, where 1 indicates perfect similarity. This metric is particularly useful for text embeddings because it focuses on the direction of the vectors rather than their magnitude.\n\nSQLite with FTS5 provides an excellent foundation for building RAG systems. FTS5 (Full-Text Search version 5) is a powerful extension that enables efficient"
+      ]
+    },
+    {
+      "id": 4,
+      "hit": false,
+      "latency_ms": 17,
+      "error": null,
+      "question": "What is the return window?",
+      "expected_substring": "I don't know",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "base. The retriever searches through a collection of documents to find the most relevant passages for a given query. These retrieved passages are then combined with the original query and fed into the generator, which produces a final response.\n\nVector databases play a crucial role in modern RAG systems by enabling efficient semantic search. Instead of relying on traditional keyword-based search, vector databases store document embeddings and use similarity metrics to find the most relevant",
+        "Retrieval-Augmented Generation (RAG) is a powerful technique that combines the strengths of large language models with external knowledge retrieval. This approach addresses one of the key limitations of traditional language models: their inability to access up-to-date or domain-specific information that wasn't present in their training data.\n\nThe RAG pipeline typically consists of three main components: a retriever, a generator, and a knowledge base. The retriever searches through a collection",
+        "ent.\n\nModel tracking is another crucial aspect of RAG systems. By storing information about which embedding model was used to generate each vector, we can ensure consistency and enable model-specific optimizations. This is particularly important when upgrading embedding models or comparing performance across different models.\n\nPre-computed norms can significantly improve the performance of similarity calculations. By storing the L2 norm of each embedding vector, we can avoid recalculating these"
+      ]
+    },
+    {
+      "id": 5,
+      "hit": false,
+      "latency_ms": 17,
+      "error": null,
+      "question": "Convert the lead time to days.",
+      "expected_substring": "21",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "Cosine similarity is a commonly used metric for comparing embeddings. It measures the cosine of the angle between two vectors, providing a value between -1 and 1, where 1 indicates perfect similarity. This metric is particularly useful for text embeddings because it focuses on the direction of the vectors rather than their magnitude.\n\nSQLite with FTS5 provides an excellent foundation for building RAG systems. FTS5 (Full-Text Search version 5) is a powerful extension that enables efficient",
+        "d maintain data consistency.",
+        "use similarity metrics to find the most relevant content. This allows for more nuanced and contextually appropriate retrieval.\n\nEmbeddings are numerical representations of text that capture semantic meaning. They are typically generated using neural networks trained on large text corpora. The quality of embeddings directly impacts the performance of the retrieval system, as better embeddings lead to more accurate similarity calculations.\n\nCosine similarity is a commonly used metric for"
+      ]
+    },
+    {
+      "id": 6,
+      "hit": false,
+      "latency_ms": 16,
+      "error": null,
+      "question": "Give the latest revision date.",
+      "expected_substring": "2024-11-03",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "d maintain data consistency.",
+        "Retrieval-Augmented Generation (RAG) is a powerful technique that combines the strengths of large language models with external knowledge retrieval. This approach addresses one of the key limitations of traditional language models: their inability to access up-to-date or domain-specific information that wasn't present in their training data.\n\nThe RAG pipeline typically consists of three main components: a retriever, a generator, and a knowledge base. The retriever searches through a collection",
+        "ent.\n\nModel tracking is another crucial aspect of RAG systems. By storing information about which embedding model was used to generate each vector, we can ensure consistency and enable model-specific optimizations. This is particularly important when upgrading embedding models or comparing performance across different models.\n\nPre-computed norms can significantly improve the performance of similarity calculations. By storing the L2 norm of each embedding vector, we can avoid recalculating these"
+      ]
+    },
+    {
+      "id": 7,
+      "hit": false,
+      "latency_ms": 17,
+      "error": null,
+      "question": "State the model name exactly.",
+      "expected_substring": "^LLAMA-3\\.1:8B$",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "ent.\n\nModel tracking is another crucial aspect of RAG systems. By storing information about which embedding model was used to generate each vector, we can ensure consistency and enable model-specific optimizations. This is particularly important when upgrading embedding models or comparing performance across different models.\n\nPre-computed norms can significantly improve the performance of similarity calculations. By storing the L2 norm of each embedding vector, we can avoid recalculating these",
+        "d maintain data consistency.",
+        "e sections. The chunk size and overlap parameters need to be carefully tuned based on the specific use case and document characteristics.\n\nDeterministic document IDs are important for maintaining consistency in RAG systems. By using content-based hashing to generate document IDs, we can ensure that identical content always receives the same identifier. This enables efficient duplicate detection and prevents redundant processing of the same content.\n\nModel tracking is another crucial aspect of"
+      ]
+    },
+    {
+      "id": 8,
+      "hit": false,
+      "latency_ms": 18,
+      "error": null,
+      "question": "What is the support email?",
+      "expected_substring": "support@example.com",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "Retrieval-Augmented Generation (RAG) is a powerful technique that combines the strengths of large language models with external knowledge retrieval. This approach addresses one of the key limitations of traditional language models: their inability to access up-to-date or domain-specific information that wasn't present in their training data.\n\nThe RAG pipeline typically consists of three main components: a retriever, a generator, and a knowledge base. The retriever searches through a collection",
+        "base. The retriever searches through a collection of documents to find the most relevant passages for a given query. These retrieved passages are then combined with the original query and fed into the generator, which produces a final response.\n\nVector databases play a crucial role in modern RAG systems by enabling efficient semantic search. Instead of relying on traditional keyword-based search, vector databases store document embeddings and use similarity metrics to find the most relevant",
+        "5) is a powerful extension that enables efficient text search capabilities within SQLite databases. When combined with vector storage for embeddings, SQLite can serve as a complete knowledge base for RAG applications.\n\nThe chunking process is essential for effective document processing in RAG systems. Long documents are typically split into smaller, overlapping chunks to ensure that relevant information can be retrieved even when it spans multiple sections. The chunk size and overlap parameters"
+      ]
+    },
+    {
+      "id": 9,
+      "hit": false,
+      "latency_ms": 17,
+      "error": null,
+      "question": "How many sizes are offered?",
+      "expected_substring": ".*\\b(4|four)\\b.*",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "5) is a powerful extension that enables efficient text search capabilities within SQLite databases. When combined with vector storage for embeddings, SQLite can serve as a complete knowledge base for RAG applications.\n\nThe chunking process is essential for effective document processing in RAG systems. Long documents are typically split into smaller, overlapping chunks to ensure that relevant information can be retrieved even when it spans multiple sections. The chunk size and overlap parameters",
+        "Cosine similarity is a commonly used metric for comparing embeddings. It measures the cosine of the angle between two vectors, providing a value between -1 and 1, where 1 indicates perfect similarity. This metric is particularly useful for text embeddings because it focuses on the direction of the vectors rather than their magnitude.\n\nSQLite with FTS5 provides an excellent foundation for building RAG systems. FTS5 (Full-Text Search version 5) is a powerful extension that enables efficient",
+        "ent.\n\nModel tracking is another crucial aspect of RAG systems. By storing information about which embedding model was used to generate each vector, we can ensure consistency and enable model-specific optimizations. This is particularly important when upgrading embedding models or comparing performance across different models.\n\nPre-computed norms can significantly improve the performance of similarity calculations. By storing the L2 norm of each embedding vector, we can avoid recalculating these"
+      ]
+    },
+    {
+      "id": 10,
+      "hit": false,
+      "latency_ms": 17,
+      "error": null,
+      "question": "Which items are not permitted?",
+      "expected_substring": "I don't know",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "5) is a powerful extension that enables efficient text search capabilities within SQLite databases. When combined with vector storage for embeddings, SQLite can serve as a complete knowledge base for RAG applications.\n\nThe chunking process is essential for effective document processing in RAG systems. Long documents are typically split into smaller, overlapping chunks to ensure that relevant information can be retrieved even when it spans multiple sections. The chunk size and overlap parameters",
+        "Retrieval-Augmented Generation (RAG) is a powerful technique that combines the strengths of large language models with external knowledge retrieval. This approach addresses one of the key limitations of traditional language models: their inability to access up-to-date or domain-specific information that wasn't present in their training data.\n\nThe RAG pipeline typically consists of three main components: a retriever, a generator, and a knowledge base. The retriever searches through a collection",
+        "base. The retriever searches through a collection of documents to find the most relevant passages for a given query. These retrieved passages are then combined with the original query and fed into the generator, which produces a final response.\n\nVector databases play a crucial role in modern RAG systems by enabling efficient semantic search. Instead of relying on traditional keyword-based search, vector databases store document embeddings and use similarity metrics to find the most relevant"
+      ]
+    },
+    {
+      "id": 11,
+      "hit": false,
+      "latency_ms": 19,
+      "error": null,
+      "question": "Name any plastic type allowed.",
+      "expected_substring": "^(PET|ABS)$",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "Retrieval-Augmented Generation (RAG) is a powerful technique that combines the strengths of large language models with external knowledge retrieval. This approach addresses one of the key limitations of traditional language models: their inability to access up-to-date or domain-specific information that wasn't present in their training data.\n\nThe RAG pipeline typically consists of three main components: a retriever, a generator, and a knowledge base. The retriever searches through a collection",
+        "5) is a powerful extension that enables efficient text search capabilities within SQLite databases. When combined with vector storage for embeddings, SQLite can serve as a complete knowledge base for RAG applications.\n\nThe chunking process is essential for effective document processing in RAG systems. Long documents are typically split into smaller, overlapping chunks to ensure that relevant information can be retrieved even when it spans multiple sections. The chunk size and overlap parameters",
+        "ent.\n\nModel tracking is another crucial aspect of RAG systems. By storing information about which embedding model was used to generate each vector, we can ensure consistency and enable model-specific optimizations. This is particularly important when upgrading embedding models or comparing performance across different models.\n\nPre-computed norms can significantly improve the performance of similarity calculations. By storing the L2 norm of each embedding vector, we can avoid recalculating these"
+      ]
+    },
+    {
+      "id": 12,
+      "hit": false,
+      "latency_ms": 17,
+      "error": null,
+      "question": "When does coverage start?",
+      "expected_substring": "30 days after purchase",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "5) is a powerful extension that enables efficient text search capabilities within SQLite databases. When combined with vector storage for embeddings, SQLite can serve as a complete knowledge base for RAG applications.\n\nThe chunking process is essential for effective document processing in RAG systems. Long documents are typically split into smaller, overlapping chunks to ensure that relevant information can be retrieved even when it spans multiple sections. The chunk size and overlap parameters",
+        "Retrieval-Augmented Generation (RAG) is a powerful technique that combines the strengths of large language models with external knowledge retrieval. This approach addresses one of the key limitations of traditional language models: their inability to access up-to-date or domain-specific information that wasn't present in their training data.\n\nThe RAG pipeline typically consists of three main components: a retriever, a generator, and a knowledge base. The retriever searches through a collection",
+        "base. The retriever searches through a collection of documents to find the most relevant passages for a given query. These retrieved passages are then combined with the original query and fed into the generator, which produces a final response.\n\nVector databases play a crucial role in modern RAG systems by enabling efficient semantic search. Instead of relying on traditional keyword-based search, vector databases store document embeddings and use similarity metrics to find the most relevant"
+      ]
+    },
+    {
+      "id": 13,
+      "hit": false,
+      "latency_ms": 19,
+      "error": null,
+      "question": "What voltage is required?",
+      "expected_substring": "110–120 V AC",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "base. The retriever searches through a collection of documents to find the most relevant passages for a given query. These retrieved passages are then combined with the original query and fed into the generator, which produces a final response.\n\nVector databases play a crucial role in modern RAG systems by enabling efficient semantic search. Instead of relying on traditional keyword-based search, vector databases store document embeddings and use similarity metrics to find the most relevant",
+        "ent.\n\nModel tracking is another crucial aspect of RAG systems. By storing information about which embedding model was used to generate each vector, we can ensure consistency and enable model-specific optimizations. This is particularly important when upgrading embedding models or comparing performance across different models.\n\nPre-computed norms can significantly improve the performance of similarity calculations. By storing the L2 norm of each embedding vector, we can avoid recalculating these",
+        "Cosine similarity is a commonly used metric for comparing embeddings. It measures the cosine of the angle between two vectors, providing a value between -1 and 1, where 1 indicates perfect similarity. This metric is particularly useful for text embeddings because it focuses on the direction of the vectors rather than their magnitude.\n\nSQLite with FTS5 provides an excellent foundation for building RAG systems. FTS5 (Full-Text Search version 5) is a powerful extension that enables efficient"
+      ]
+    },
+    {
+      "id": 14,
+      "hit": false,
+      "latency_ms": 20,
+      "error": null,
+      "question": "What is the maximum operating temperature?",
+      "expected_substring": "45°C",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "Retrieval-Augmented Generation (RAG) is a powerful technique that combines the strengths of large language models with external knowledge retrieval. This approach addresses one of the key limitations of traditional language models: their inability to access up-to-date or domain-specific information that wasn't present in their training data.\n\nThe RAG pipeline typically consists of three main components: a retriever, a generator, and a knowledge base. The retriever searches through a collection",
+        "ent.\n\nModel tracking is another crucial aspect of RAG systems. By storing information about which embedding model was used to generate each vector, we can ensure consistency and enable model-specific optimizations. This is particularly important when upgrading embedding models or comparing performance across different models.\n\nPre-computed norms can significantly improve the performance of similarity calculations. By storing the L2 norm of each embedding vector, we can avoid recalculating these",
+        "mbedding vector, we can avoid recalculating these values during search operations, leading to faster retrieval times, especially for large-scale systems.\n\nThe ingestion pipeline is a critical component that determines the quality and efficiency of the entire RAG system. A well-designed pipeline should handle various file formats, implement proper chunking strategies, and provide robust error handling. It should also support incremental updates and maintain data consistency."
+      ]
+    },
+    {
+      "id": 15,
+      "hit": false,
+      "latency_ms": 15,
+      "error": null,
+      "question": "Is steel allowed?",
+      "expected_substring": "I don't know",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "5) is a powerful extension that enables efficient text search capabilities within SQLite databases. When combined with vector storage for embeddings, SQLite can serve as a complete knowledge base for RAG applications.\n\nThe chunking process is essential for effective document processing in RAG systems. Long documents are typically split into smaller, overlapping chunks to ensure that relevant information can be retrieved even when it spans multiple sections. The chunk size and overlap parameters",
+        "Cosine similarity is a commonly used metric for comparing embeddings. It measures the cosine of the angle between two vectors, providing a value between -1 and 1, where 1 indicates perfect similarity. This metric is particularly useful for text embeddings because it focuses on the direction of the vectors rather than their magnitude.\n\nSQLite with FTS5 provides an excellent foundation for building RAG systems. FTS5 (Full-Text Search version 5) is a powerful extension that enables efficient",
+        "use similarity metrics to find the most relevant content. This allows for more nuanced and contextually appropriate retrieval.\n\nEmbeddings are numerical representations of text that capture semantic meaning. They are typically generated using neural networks trained on large text corpora. The quality of embeddings directly impacts the performance of the retrieval system, as better embeddings lead to more accurate similarity calculations.\n\nCosine similarity is a commonly used metric for"
+      ]
+    }
+  ]
+}

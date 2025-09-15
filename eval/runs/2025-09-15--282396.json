@@ -1,0 +1,123 @@
+{
+  "summary": {
+    "run_id": "2025-09-15--282396",
+    "model": "llama3.1:8b",
+    "pipeline_version": "dev",
+    "harness_version": "dev",
+    "golden_hash": "499ee6a1",
+    "config_hash": "2d4e454d",
+    "started_at": "2025-09-15T16:07:22.701Z",
+    "finished_at": "2025-09-15T16:08:04.530Z",
+    "total": 15,
+    "passed": 12,
+    "accuracy": 0.8,
+    "avg_latency_ms": 2557
+  },
+  "items": [
+    {
+      "id": 1,
+      "pass": true,
+      "latency_ms": 1030,
+      "error": null,
+      "actual": "2 years."
+    },
+    {
+      "id": 2,
+      "pass": true,
+      "latency_ms": 1327,
+      "error": null,
+      "actual": "Glass, wood, and plastic (including PET and ABS)."
+    },
+    {
+      "id": 3,
+      "pass": true,
+      "latency_ms": 1356,
+      "error": null,
+      "actual": "One join type is a 45-degree frame join."
+    },
+    {
+      "id": 4,
+      "pass": false,
+      "latency_ms": 3638,
+      "error": null,
+      "actual": "The context does not mention anything about a \"return window\". The topic appears to be about search algorithms and vector databases for information retrieval. There is no mention of a product or service being returned, so it seems there is no answer to this question based on the provided text."
+    },
+    {
+      "id": 5,
+      "pass": true,
+      "latency_ms": 3203,
+      "error": null,
+      "actual": "To convert the lead time from weeks to days, we multiply by 7 (since there are 7 days in a week).\n\nLead Time: 3 weeks × 7 days/week = 21 days\n\nSo, the answer is: 21 days."
+    },
+    {
+      "id": 6,
+      "pass": true,
+      "latency_ms": 972,
+      "error": null,
+      "actual": "2024-11-03"
+    },
+    {
+      "id": 7,
+      "pass": true,
+      "latency_ms": 1208,
+      "error": null,
+      "actual": "LLAMA-3.1:8B."
+    },
+    {
+      "id": 8,
+      "pass": true,
+      "latency_ms": 588,
+      "error": null,
+      "actual": "support@example.com"
+    },
+    {
+      "id": 9,
+      "pass": true,
+      "latency_ms": 1894,
+      "error": null,
+      "actual": "Based on the provided context, there are 4 sizes available: S, M, L, and XL. \n\nSo, the answer is: 4."
+    },
+    {
+      "id": 10,
+      "pass": false,
+      "latency_ms": 2559,
+      "error": null,
+      "actual": "None. All three items (glass, wood, and plastic) are mentioned as \"permitted\", \"allowed\", or \"approved\". There is no information suggesting that any of these items are not permitted."
+    },
+    {
+      "id": 11,
+      "pass": true,
+      "latency_ms": 6085,
+      "error": null,
+      "actual": "ABS. \n\nThe question asks for a specific name of plastic type. \"Plastic\" is mentioned as an allowed material in the first section. In the third section, it's specified that \"plastic includes PET and ABS\". Therefore, we need to choose one from the options given (PET or ABS) to answer the question. Since the question asks for a specific name of plastic type, either one would be correct, but based on the context, I will choose ABS."
+    },
+    {
+      "id": 12,
+      "pass": true,
+      "latency_ms": 1969,
+      "error": null,
+      "actual": "30 days after purchase."
+    },
+    {
+      "id": 13,
+      "pass": true,
+      "latency_ms": 1063,
+      "error": null,
+      "actual": "110-120 V AC"
+    },
+    {
+      "id": 14,
+      "pass": true,
+      "latency_ms": 7292,
+      "error": null,
+      "actual": "Based on the provided context, the maximum operating temperature is 45°C (according to the \"Temperature Range\" section). \n\nSo, the correct answer is:\n45°C"
+    },
+    {
+      "id": 15,
+      "pass": false,
+      "latency_ms": 4173,
+      "error": null,
+      "actual": "Based on the context provided, there is no mention of steel in any of the sections (Allowed Materials, Permitted Items, or Approved Materials). Therefore, we can infer that steel is not allowed."
+    }
+  ]
+}

@@ -1,12 +1,12 @@
 import os
 import requests
 
-from config import BASE_URL, LLM_MODEL
+from config import OLLAMA_BASE_URL, LLM_MODEL
 
 def generate(prompt: str) -> str:
     try:
         r = requests.post(
-            f"{BASE_URL}/api/generate",
+            f"{OLLAMA_BASE_URL}/api/generate",
             json={"model": LLM_MODEL, "prompt": prompt, "stream": False},
             timeout=30,
         )

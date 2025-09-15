@@ -1,0 +1,230 @@
+{
+  "summary": {
+    "run_id": "2025-09-15--831168",
+    "evaluation_type": "retrieval_hit_at_k",
+    "top_k": 5,
+    "api_url": "http://localhost:8000",
+    "pipeline_version": "dev",
+    "harness_version": "dev",
+    "golden_hash": "499ee6a1",
+    "config_hash": "d76445aa",
+    "started_at": "2025-09-15T15:59:50.895Z",
+    "finished_at": "2025-09-15T15:59:51.587Z",
+    "total": 15,
+    "hits": 9,
+    "hit_rate": 0.6,
+    "avg_latency_ms": 31
+  },
+  "items": [
+    {
+      "id": 1,
+      "hit": true,
+      "latency_ms": 61,
+      "error": null,
+      "question": "What is the warranty period?",
+      "expected_substring": "2 years",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "## Warranty Information\nThe warranty period is 2 years.",
+        "# Document A - Materials and Warranty",
+        "## Coverage Start Date\nCoverage begins 30 days after purchase."
+      ]
+    },
+    {
+      "id": 2,
+      "hit": true,
+      "latency_ms": 42,
+      "error": null,
+      "question": "Which materials are allowed?",
+      "expected_substring": "(?=.*\\bglass\\b)(?=.*\\bwood\\b)(?=.*\\bplastic\\b).+",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "## Allowed Materials\nAllowed materials: glass, wood, plastic.",
+        "## Permitted Items\nPermitted items: glass, wood, plastic.",
+        "## Approved Materials\nApproved materials are glass, wood, and plastic. Plastic includes PET and ABS."
+      ]
+    },
+    {
+      "id": 3,
+      "hit": true,
+      "latency_ms": 32,
+      "error": null,
+      "question": "Name one join type.",
+      "expected_substring": ".*\\b(45(?:\\s*degrees|-degree)|vertical outside|horizontal outside)\\b.*",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "## Frame Join Types\nFrame joins can be 45 degrees.",
+        "# Document B - Frame Joins",
+        "## Available Sizes\nSizes: S, M, L, XL (four options)."
+      ]
+    },
+    {
+      "id": 4,
+      "hit": false,
+      "latency_ms": 35,
+      "error": null,
+      "question": "What is the return window?",
+      "expected_substring": "I don't know",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "## Return Information\nThis document does not define any return policy.",
+        "# Document C - Return Policy",
+        "base. The retriever searches through a collection of documents to find the most relevant passages for a given query. These retrieved passages are then combined with the original query and fed into the generator, which produces a final response.\n\nVector databases play a crucial role in modern RAG systems by enabling efficient semantic search. Instead of relying on traditional keyword-based search, vector databases store document embeddings and use similarity metrics to find the most relevant"
+      ]
+    },
+    {
+      "id": 5,
+      "hit": false,
+      "latency_ms": 29,
+      "error": null,
+      "question": "Convert the lead time to days.",
+      "expected_substring": "21",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "# Document D - Lead Times",
+        "## Production Lead Time\nLead time: 3 weeks.",
+        "## Coverage Start Date\nCoverage begins 30 days after purchase."
+      ]
+    },
+    {
+      "id": 6,
+      "hit": true,
+      "latency_ms": 28,
+      "error": null,
+      "question": "Give the latest revision date.",
+      "expected_substring": "2024-11-03",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "# Document E - Revision History",
+        "## Document Revisions\nRevisions: v1 (2023-01-10), v2 (2024-11-03).",
+        "## Current Model\nCurrent model is LLAMA-3.1:8B."
+      ]
+    },
+    {
+      "id": 7,
+      "hit": false,
+      "latency_ms": 27,
+      "error": null,
+      "question": "State the model name exactly.",
+      "expected_substring": "^LLAMA-3\\.1:8B$",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "# Document F - Model Information",
+        "## Current Model\nCurrent model is LLAMA-3.1:8B.",
+        "ent.\n\nModel tracking is another crucial aspect of RAG systems. By storing information about which embedding model was used to generate each vector, we can ensure consistency and enable model-specific optimizations. This is particularly important when upgrading embedding models or comparing performance across different models.\n\nPre-computed norms can significantly improve the performance of similarity calculations. By storing the L2 norm of each embedding vector, we can avoid recalculating these"
+      ]
+    },
+    {
+      "id": 8,
+      "hit": true,
+      "latency_ms": 29,
+      "error": null,
+      "question": "What is the support email?",
+      "expected_substring": "support@example.com",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "## Support Contact\nContact: support@example.com for issues.",
+        "# Document G - Contact Information",
+        "## Warranty Information\nThe warranty period is 2 years."
+      ]
+    },
+    {
+      "id": 9,
+      "hit": true,
+      "latency_ms": 31,
+      "error": null,
+      "question": "How many sizes are offered?",
+      "expected_substring": ".*\\b(4|four)\\b.*",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "## Available Sizes\nSizes: S, M, L, XL (four options).",
+        "# Document H - Size Options",
+        "## Permitted Items\nPermitted items: glass, wood, plastic."
+      ]
+    },
+    {
+      "id": 10,
+      "hit": false,
+      "latency_ms": 37,
+      "error": null,
+      "question": "Which items are not permitted?",
+      "expected_substring": "I don't know",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "## Permitted Items\nPermitted items: glass, wood, plastic.",
+        "## Allowed Materials\nAllowed materials: glass, wood, plastic.",
+        "## Approved Materials\nApproved materials are glass, wood, and plastic. Plastic includes PET and ABS."
+      ]
+    },
+    {
+      "id": 11,
+      "hit": false,
+      "latency_ms": 35,
+      "error": null,
+      "question": "Name any plastic type allowed.",
+      "expected_substring": "^(PET|ABS)$",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "## Allowed Materials\nAllowed materials: glass, wood, plastic.",
+        "## Permitted Items\nPermitted items: glass, wood, plastic.",
+        "## Approved Materials\nApproved materials are glass, wood, and plastic. Plastic includes PET and ABS."
+      ]
+    },
+    {
+      "id": 12,
+      "hit": true,
+      "latency_ms": 24,
+      "error": null,
+      "question": "When does coverage start?",
+      "expected_substring": "30 days after purchase",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "## Coverage Start Date\nCoverage begins 30 days after purchase.",
+        "# Document I - Coverage Information",
+        "## Support Contact\nContact: support@example.com for issues."
+      ]
+    },
+    {
+      "id": 13,
+      "hit": true,
+      "latency_ms": 22,
+      "error": null,
+      "question": "What voltage is required?",
+      "expected_substring": "110–120 V AC",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "## Electrical Specifications\nPower requirements: 110–120 V AC only. DC adapters are not supported.",
+        "# Document J - Power Requirements",
+        "## Technical Details"
+      ]
+    },
+    {
+      "id": 14,
+      "hit": true,
+      "latency_ms": 20,
+      "error": null,
+      "question": "What is the maximum operating temperature?",
+      "expected_substring": "45°C",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "## Temperature Range\nOperating temperature range: 0°C to 45°C.",
+        "# Document K - Operating Conditions",
+        "## Electrical Specifications\nPower requirements: 110–120 V AC only. DC adapters are not supported."
+      ]
+    },
+    {
+      "id": 15,
+      "hit": false,
+      "latency_ms": 17,
+      "error": null,
+      "question": "Is steel allowed?",
+      "expected_substring": "I don't know",
+      "retrieved_count": 5,
+      "retrieved_snippets": [
+        "## Allowed Materials\nAllowed materials: glass, wood, plastic.",
+        "## Permitted Items\nPermitted items: glass, wood, plastic.",
+        "## Approved Materials\nApproved materials are glass, wood, and plastic. Plastic includes PET and ABS."
+      ]
+    }
+  ]
+}

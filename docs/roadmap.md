@@ -21,15 +21,15 @@
     - Explore integration path between Node harness and Python pipeline
     - Begin structuring regression testing process
 
-- Week 3 – Document Ingestion
+- Week 3 – Document Ingestion ✅
 
   - Goal: Move beyond inline text to ingest structured documents
   - Steps:
-    - Add ingestion for PDFs, HTML, Markdown
-    - Normalize docs into a common block schema
-    - Introduce metadata fields (title, source, page)
-    - Implement chunking strategy (recursive split by headings, paragraphs)
-    - Prepare sample corpora for later retrieval tests
+    - ✅ Add ingestion for PDFs, HTML, Markdown
+    - ✅ Normalize docs into a common block schema
+    - ✅ Introduce metadata fields (title, source, page)
+    - ✅ Implement chunking strategy (recursive split by headings, paragraphs)
+    - ✅ Prepare sample corpora for later retrieval tests
 
 - Week 4 – Vector Storage
 
