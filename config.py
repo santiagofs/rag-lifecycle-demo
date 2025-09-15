@@ -22,6 +22,9 @@ EMBED_MODEL_NAME = os.getenv("EMBED_MODEL_NAME", "nomic-embed-text")
 # Database Configuration
 DB_PATH = os.getenv("DB_PATH", "./vectors.db")
 
+# Index Configuration
+INDEX_DIR = os.getenv("INDEX_DIR", "var/index")
+
 # Embedding Model Configuration
 EMBED_MODEL_DIGEST = os.getenv("EMBED_MODEL_DIGEST", "")
 
@@ -32,3 +35,4 @@ CHUNK_OVERLAP = int(os.getenv("CHUNK_OVERLAP", "50"))
 # Retrieval Configuration
 TOP_K = int(os.getenv("TOP_K", "5"))
 HYBRID = os.getenv("HYBRID", "false").lower() == "true"
+USE_FAISS = os.getenv("USE_FAISS", "false").lower() == "true"

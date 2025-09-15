@@ -2,6 +2,8 @@
 // Use global fetch available in modern Node; avoid non-portable 'node:fetch' import
 
 const API_BASE_URL = process.env.RAG_API_URL || "http://localhost:8000"
+const TOP_K = parseInt(process.env.TOP_K) || 3
+const RETRIEVAL_METHOD = (process.env.RAG_RETRIEVAL_METHOD || "cosine").toLowerCase()
 
 export async function callRagAPI(question, context) {
   try {
@@ -10,8 +12,8 @@ export async function callRagAPI(question, context) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         query: question,
-        k: 3,
-        method: "cosine", // Can be "cosine", "hybrid", or "fts"
+        k: TOP_K,
+        method: RETRIEVAL_METHOD, // "cosine", "hybrid", "fts", or "faiss"
       }),
     })
 
@@ -34,8 +36,8 @@ export async function callRetrieveAPI(question) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         query: question,
-        k: 3,
-        method: "cosine",
+        k: TOP_K,
+        method: RETRIEVAL_METHOD,
       }),
     })
 

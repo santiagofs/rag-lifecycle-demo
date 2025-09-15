@@ -4,9 +4,13 @@ from typing import List, Dict, Optional
 import uvicorn
 from src.embeddings import get_embedding
 from src.db import store
-from src.retrieve import retrieve_cosine, retrieve_hybrid, retrieve_fts, get_context_from_results, retrieve
+from src.retrieve import retrieve_cosine, retrieve_hybrid, retrieve_fts, retrieve_faiss, get_context_from_results, retrieve
 from src.llm import generate
-from config import TOP_K, HYBRID
+from config import TOP_K, HYBRID, DB_PATH, INDEX_DIR, LLM_MODEL, EMBED_MODEL_NAME, PROVIDER
+try:
+    from config import USE_FAISS  # optional flag
+except Exception:
+    USE_FAISS = False
 
 app = FastAPI(title="RAG API", description="Retrieval-Augmented Generation API")
 
@@ -55,6 +59,8 @@ async def retrieve_documents(query: QueryRequest):
             results = retrieve_hybrid(query.query, k, query.cosine_weight, query.fts_weight)
         elif method == "fts":
             results = retrieve_fts(query.query, k)
+        elif method == "faiss":
+            results = retrieve_faiss(query.query, k)
         else:
             raise HTTPException(status_code=400, detail="Invalid method. Use 'cosine', 'hybrid', or 'fts'")
 
@@ -83,6 +89,8 @@ async def rag_query(query: QueryRequest):
             results = retrieve_hybrid(query.query, k, query.cosine_weight, query.fts_weight)
         elif method == "fts":
             results = retrieve_fts(query.query, k)
+        elif method == "faiss":
+            results = retrieve_faiss(query.query, k)
         else:
             raise HTTPException(status_code=400, detail="Invalid method. Use 'cosine', 'hybrid', or 'fts'")
 
@@ -118,6 +126,25 @@ async def get_stats():
 async def health_check():
     """Health check endpoint"""
     return {"status": "healthy"}
+
+@app.get("/config")
+async def get_config():
+    """Surface runtime configuration (non-sensitive) to verify alignment."""
+    return {
+        "db_path": DB_PATH,
+        "index_dir": INDEX_DIR,
+        "retrieval": {
+            "top_k": TOP_K,
+            "hybrid": HYBRID,
+            "use_faiss": USE_FAISS,
+        },
+        "models": {
+            "llm_model": LLM_MODEL,
+            "embed_model": EMBED_MODEL_NAME,
+        },
+        "provider": PROVIDER,
+        "status": "ok",
+    }
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

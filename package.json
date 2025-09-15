@@ -15,6 +15,13 @@
     "db:vacuum": "python src/db.py --vacuum",
     "db:reinit": "python src/db.py --init --force",
     "db:checkpoint": "python src/db.py --checkpoint",
-    "ingest": "python src/ingest_cli.py"
+    "ingest": "python src/ingest_cli.py",
+    "faiss:build": "python -m src.store.faiss_index build --db vectors.db --out var/index",
+    "faiss:rebuild": "python -m src.store.faiss_index build --db vectors.db --out var/index",
+    "faiss:search": "python -m src.store.faiss_index search \"what is the repo about?\" --k 5 --out var/index --db vectors.db",
+    "eval:retrieval:cosine": "RAG_RETRIEVAL_METHOD=cosine TOP_K=5 node eval/retrieval_eval.mjs eval/tests/golden.json",
+    "eval:retrieval:faiss": "RAG_RETRIEVAL_METHOD=faiss TOP_K=5 node eval/retrieval_eval.mjs eval/tests/golden.json",
+    "eval:api:cosine": "RAG_RETRIEVAL_METHOD=cosine TOP_K=5 node eval/run.mjs eval/tests/golden.json --api",
+    "eval:api:faiss": "RAG_RETRIEVAL_METHOD=faiss TOP_K=5 node eval/run.mjs eval/tests/golden.json --api"
   }
 }

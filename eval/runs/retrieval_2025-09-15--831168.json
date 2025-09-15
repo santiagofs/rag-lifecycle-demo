@@ -1,6 +1,6 @@
 {
   "summary": {
-    "run_id": "2025-09-15--787315",
+    "run_id": "2025-09-15--831168",
     "evaluation_type": "retrieval_hit_at_k",
     "top_k": 5,
     "api_url": "http://localhost:8000",
@@ -8,18 +8,18 @@
     "harness_version": "dev",
     "golden_hash": "499ee6a1",
     "config_hash": "d76445aa",
-    "started_at": "2025-09-15T16:08:11.117Z",
-    "finished_at": "2025-09-15T16:08:11.579Z",
+    "started_at": "2025-09-15T15:59:50.895Z",
+    "finished_at": "2025-09-15T15:59:51.587Z",
     "total": 15,
-    "hits": 11,
-    "hit_rate": 0.73,
-    "avg_latency_ms": 24
+    "hits": 9,
+    "hit_rate": 0.6,
+    "avg_latency_ms": 31
   },
   "items": [
     {
       "id": 1,
       "hit": true,
-      "latency_ms": 35,
+      "latency_ms": 61,
       "error": null,
       "question": "What is the warranty period?",
       "expected_substring": "2 years",
@@ -33,7 +33,7 @@
     {
       "id": 2,
       "hit": true,
-      "latency_ms": 28,
+      "latency_ms": 42,
       "error": null,
       "question": "Which materials are allowed?",
       "expected_substring": "(?=.*\\bglass\\b)(?=.*\\bwood\\b)(?=.*\\bplastic\\b).+",
@@ -47,7 +47,7 @@
     {
       "id": 3,
       "hit": true,
-      "latency_ms": 22,
+      "latency_ms": 32,
       "error": null,
       "question": "Name one join type.",
       "expected_substring": ".*\\b(45(?:\\s*degrees|-degree)|vertical outside|horizontal outside)\\b.*",
@@ -61,7 +61,7 @@
     {
       "id": 4,
       "hit": false,
-      "latency_ms": 20,
+      "latency_ms": 35,
       "error": null,
       "question": "What is the return window?",
       "expected_substring": "I don't know",
@@ -75,7 +75,7 @@
     {
       "id": 5,
       "hit": false,
-      "latency_ms": 22,
+      "latency_ms": 29,
       "error": null,
       "question": "Convert the lead time to days.",
       "expected_substring": "21",
@@ -89,7 +89,7 @@
     {
       "id": 6,
       "hit": true,
-      "latency_ms": 23,
+      "latency_ms": 28,
       "error": null,
       "question": "Give the latest revision date.",
       "expected_substring": "2024-11-03",
@@ -102,8 +102,8 @@
     },
     {
       "id": 7,
-      "hit": true,
-      "latency_ms": 21,
+      "hit": false,
+      "latency_ms": 27,
       "error": null,
       "question": "State the model name exactly.",
       "expected_substring": "^LLAMA-3\\.1:8B$",
@@ -117,7 +117,7 @@
     {
       "id": 8,
       "hit": true,
-      "latency_ms": 24,
+      "latency_ms": 29,
       "error": null,
       "question": "What is the support email?",
       "expected_substring": "support@example.com",
@@ -131,7 +131,7 @@
     {
       "id": 9,
       "hit": true,
-      "latency_ms": 25,
+      "latency_ms": 31,
       "error": null,
       "question": "How many sizes are offered?",
       "expected_substring": ".*\\b(4|four)\\b.*",
@@ -145,7 +145,7 @@
     {
       "id": 10,
       "hit": false,
-      "latency_ms": 26,
+      "latency_ms": 37,
       "error": null,
       "question": "Which items are not permitted?",
       "expected_substring": "I don't know",
@@ -158,8 +158,8 @@
     },
     {
       "id": 11,
-      "hit": true,
-      "latency_ms": 26,
+      "hit": false,
+      "latency_ms": 35,
       "error": null,
       "question": "Name any plastic type allowed.",
       "expected_substring": "^(PET|ABS)$",
@@ -173,7 +173,7 @@
     {
       "id": 12,
       "hit": true,
-      "latency_ms": 26,
+      "latency_ms": 24,
       "error": null,
       "question": "When does coverage start?",
       "expected_substring": "30 days after purchase",
@@ -187,7 +187,7 @@
     {
       "id": 13,
       "hit": true,
-      "latency_ms": 19,
+      "latency_ms": 22,
       "error": null,
       "question": "What voltage is required?",
       "expected_substring": "110–120 V AC",

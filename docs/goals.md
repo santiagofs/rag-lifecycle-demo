@@ -1,3 +1,7 @@
+# Top Goal
+
+- This is a **learning project**: the primary objective is to understand, step by step, how a RAG pipeline is built and validated.
+
 # Project Goals (North Star)
 
 - Build a **reliable RAG pipeline** that ingests sources → chunks → embeds → indexes → retrieves → answers with citations.
